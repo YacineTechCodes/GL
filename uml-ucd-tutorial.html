@@ -7,9 +7,6 @@
 <link rel="stylesheet" href="common.css">
 <style>
   /* Page-specific: this page uses scroll layout instead of sidebar-section-toggle */
-  .main { margin-left: 0; }
-  .sidebar { display: none; }
-  .hamburger { display: none !important; }
   body { padding-top: 52px; }
 
   /* Section reveal animation */
@@ -55,7 +52,41 @@
   </nav>
 </header>
 
+<button class="hamburger" onclick="toggleSidebar()">☰</button>
+
 <div class="reading-progress" style="top:52px"><div class="reading-progress-fill" id="readingProgress"></div></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="logo">
+    <span class="logo-label">GL · Course 3</span>
+    <div class="logo-title">Use Case<br>Diagrams</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Introduction</div>
+    <a class="nav-item active" onclick="document.getElementById('s1').scrollIntoView({behavior:'smooth'})"><span class="nav-num">01</span>What is a UCD?</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Elements</div>
+    <a class="nav-item" onclick="document.getElementById('s2').scrollIntoView({behavior:'smooth'})"><span class="nav-num">02</span>Actors</a>
+    <a class="nav-item" onclick="document.getElementById('s3').scrollIntoView({behavior:'smooth'})"><span class="nav-num">03</span>Use Cases</a>
+    <a class="nav-item" onclick="document.getElementById('s4').scrollIntoView({behavior:'smooth'})"><span class="nav-num">04</span>Relations</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Methodology</div>
+    <a class="nav-item" onclick="document.getElementById('s5').scrollIntoView({behavior:'smooth'})"><span class="nav-num">05</span>How to Build</a>
+    <a class="nav-item" onclick="document.getElementById('s6').scrollIntoView({behavior:'smooth'})"><span class="nav-num">06</span>Full Example</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Test</div>
+    <a class="nav-item" onclick="document.getElementById('s7').scrollIntoView({behavior:'smooth'})"><span class="nav-num">✦</span>Knowledge Check</a>
+  </div>
+</nav>
+
+<main class="main">
 
 <!-- HERO -->
 <div class="hero" style="min-height:auto; padding:80px 40px 60px; text-align:center; align-items:center;">
@@ -718,9 +749,15 @@
 
 </div><!-- end layout -->
 
+</main>
+
 <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
 // Tab switching
 function showTab(id) {
   document.querySelectorAll('.rpanel').forEach(p => p.classList.remove('active'));
@@ -784,13 +821,19 @@ sections.forEach((id, i) => {
 
 function updateScrollspy() {
   const dots = spy.querySelectorAll('.spy-dot');
+  const navItems = document.querySelectorAll('.sidebar .nav-item');
   sections.forEach((id, i) => {
     const el = document.getElementById(id);
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight * 0.6 && rect.bottom > 0) {
-      dots[i].classList.add('active');
+      if (dots[i]) dots[i].classList.add('active');
+      if (navItems[i]) {
+        navItems[i].classList.add('active');
+        navItems[i].classList.add('visited');
+      }
     } else {
-      dots[i].classList.remove('active');
+      if (dots[i]) dots[i].classList.remove('active');
+      if (navItems[i]) navItems[i].classList.remove('active');
     }
   });
 }
