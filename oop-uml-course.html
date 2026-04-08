@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Object-Oriented Modeling — Interactive Course</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .reading-progress { top: 52px; }
+</style>
+</head>
+<body>
+
+<!-- UNIFIED HEADER -->
+<header class="site-header">
+  <a class="site-header-brand" href="index.html">GL · Courses</a>
+  <button class="site-header-toggle" onclick="document.querySelector('.site-header-nav').classList.toggle('open')">☰</button>
+  <nav class="site-header-nav">
+    <a href="software_engineering_course.html"><span class="nav-num">01</span> Intro to SE</a>
+    <a href="oop-uml-course.html" class="active"><span class="nav-num">02</span> OOP & UML</a>
+    <a href="uml-ucd-tutorial.html"><span class="nav-num">03</span> Use Case Diagrams</a>
+  </nav>
+</header>
+
+<button class="hamburger" onclick="toggleSidebar()">☰</button>
+
+<div class="reading-progress"><div class="reading-progress-fill" id="readingProgress"></div></div>
+<canvas id="confetti-canvas"></canvas>
+
+<nav class="sidebar" id="sidebar">
+  <div class="logo">
+    <span class="logo-label">GL · Course 2</span>
+    <div class="logo-title">Object-Oriented<br>Modeling</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Introduction</div>
+    <a class="nav-item active" onclick="show('home')" data-section="home"><span class="nav-num">00</span>Overview<span class="check-icon">✓</span></a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Foundations</div>
+    <a class="nav-item" onclick="show('modeling')" data-section="modeling"><span class="nav-num">01</span>What is Modeling?<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="show('languages')" data-section="languages"><span class="nav-num">02</span>Modeling Languages<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="show('functional')" data-section="functional"><span class="nav-num">03</span>Functional Decomposition<span class="check-icon">✓</span></a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">OOP Concepts</div>
+    <a class="nav-item" onclick="show('oo')" data-section="oo"><span class="nav-num">04</span>OO Paradigm<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="show('principles')" data-section="principles"><span class="nav-num">05</span>Core Principles<span class="check-icon">✓</span></a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">UML</div>
+    <a class="nav-item" onclick="show('uml')" data-section="uml"><span class="nav-num">06</span>Intro to UML<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="show('diagrams')" data-section="diagrams"><span class="nav-num">07</span>UML Diagrams<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="show('usage')" data-section="usage"><span class="nav-num">08</span>Using UML<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="show('sysml')" data-section="sysml"><span class="nav-num">09</span>SysML vs UML<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="show('up')" data-section="up"><span class="nav-num">10</span>UML vs UP<span class="check-icon">✓</span></a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Test</div>
+    <a class="nav-item" onclick="show('quiz')" data-section="quiz"><span class="nav-num">✦</span>Quick Quiz<span class="check-icon">✓</span></a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <!-- HOME -->
+  <div id="home" class="section active hero">
+    <div class="hero-tag">Software Engineering · Chapter 2</div>
+    <h1>Object-Oriented<br><em>Modeling</em></h1>
+    <p>Master the art of representing software systems using the OO paradigm and the UML standard — the language every software engineer speaks.</p>
+    <button class="btn-start" onclick="show('modeling')">Start Learning →</button>
+
+    <div class="toc-grid">
+      <div class="toc-card" onclick="show('modeling')">
+        <div class="toc-card-num">01 — 03</div>
+        <div class="toc-card-title">Modeling Foundations</div>
+      </div>
+      <div class="toc-card" onclick="show('oo')">
+        <div class="toc-card-num">04 — 05</div>
+        <div class="toc-card-title">OOP Concepts</div>
+      </div>
+      <div class="toc-card" onclick="show('uml')">
+        <div class="toc-card-num">06 — 08</div>
+        <div class="toc-card-title">UML Standard</div>
+      </div>
+      <div class="toc-card" onclick="show('quiz')">
+        <div class="toc-card-num">✦</div>
+        <div class="toc-card-title">Test Your Knowledge</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 01 MODELING -->
+  <div id="modeling" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:9%"></div></div>
+    <div class="section-tag">01 · Foundations</div>
+    <h2>What is Modeling?</h2>
+
+    <div class="quote">
+      "A good sketch is worth more than a long speech."
+      <cite>— Napoléon Bonaparte</cite>
+    </div>
+
+    <p>Before writing a single line of code, software engineers need to <strong>think about and communicate</strong> the system they're building. That's where modeling comes in.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">🗺️</span>
+        <div class="card-title">Model</div>
+        <div class="card-body">An <strong>abstract representation</strong> of reality — like a map represents a territory.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">✏️</span>
+        <div class="card-title">Modeling</div>
+        <div class="card-body">Creating a model of a real system using languages and notations to <strong>simplify complexity</strong>.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔭</span>
+        <div class="card-title">Abstraction</div>
+        <div class="card-body">Focusing on the <strong>important aspects</strong> and ignoring irrelevant details.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🏗️</span>
+        <div class="card-title">Conception</div>
+        <div class="card-body">A <strong>description</strong> of the future software application to be built.</div>
+      </div>
+    </div>
+
+    <h3>Why Do We Model?</h3>
+    <p>Modeling serves three key purposes in software development:</p>
+
+    <div class="def-box">
+      <div class="def-label">Purpose 1 — Simplification</div>
+      <p>Complex systems become manageable by excluding unnecessary details and focusing on what matters.</p>
+    </div>
+    <div class="def-box">
+      <div class="def-label">Purpose 2 — Shared Understanding</div>
+      <p>All stakeholders (clients, developers, managers) can look at the same model and understand the system the same way.</p>
+    </div>
+    <div class="def-box">
+      <div class="def-label">Purpose 3 — Communication</div>
+      <p>Models act as a universal language between different parties involved in a project.</p>
+    </div>
+
+    <p>For a model to work, it requires <strong>semantics and notation</strong> (how concepts look and what they mean) plus <strong>construction rules</strong> (how to correctly put them together).</p>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="show('home')">← Back</button>
+      <button class="btn-nav primary" onclick="show('languages')">Next: Languages →</button>
+    </div>
+  </div>
+
+  <!-- 02 LANGUAGES -->
+  <div id="languages" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:18%"></div></div>
+    <div class="section-tag">02 · Foundations</div>
+    <h2>Modeling Languages</h2>
+
+    <p>A modeling language provides the vocabulary and grammar for building models. There are three major categories, each with different trade-offs.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Features</th>
+          <th>Examples</th>
+          <th>Trade-offs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="pill red">Formal</span></td>
+          <td>Mathematically verifiable, rigorous syntax</td>
+          <td>Z language, VDM</td>
+          <td>Precise but difficult to use</td>
+        </tr>
+        <tr>
+          <td><span class="pill gold">Semi-formal</span></td>
+          <td>Easy, flexible, allows some ambiguity</td>
+          <td>UML, Merise, pseudo-code</td>
+          <td>Practical balance for most projects</td>
+        </tr>
+        <tr>
+          <td><span class="pill">Informal</span></td>
+          <td>Expressive, no rules, natural language</td>
+          <td>Plain text, diagrams on whiteboards</td>
+          <td>Easy to express, hard to verify</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="def-box">
+      <div class="def-label">Key Takeaway</div>
+      <p>In software engineering, <strong>semi-formal languages</strong> like UML are the sweet spot — precise enough to be useful, flexible enough to be practical. [Uschold, 1996]</p>
+    </div>
+
+    <h3>Common Semi-Formal Methods</h3>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">📐</span>
+        <div class="card-title">UML</div>
+        <div class="card-body">The industry standard for object-oriented software modeling. 14 diagram types.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🗃️</span>
+        <div class="card-title">Merise</div>
+        <div class="card-body">A French methodology popular for data-focused systems design using entity-relationship diagrams.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">📝</span>
+        <div class="card-title">Pseudo-code</div>
+        <div class="card-body">Human-readable code-like notation for describing algorithms without syntax constraints.</div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="show('modeling')">← Back</button>
+      <button class="btn-nav primary" onclick="show('functional')">Next: Functional Decomposition →</button>
+    </div>
+  </div>
+
+  <!-- 03 FUNCTIONAL -->
+  <div id="functional" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:27%"></div></div>
+    <div class="section-tag">03 · Foundations</div>
+    <h2>Functional Decomposition</h2>
+
+    <p>Before object-oriented approaches became popular, software was designed using <strong>functional decomposition</strong> — a top-down, hierarchical breakdown of what a program does.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">🎯</span>
+        <div class="card-title">Highlight Functions</div>
+        <div class="card-body">The main goal is to identify and describe every function the system must perform.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">⬇️</span>
+        <div class="card-title">Top-Down</div>
+        <div class="card-body">Start from the main program and break it into smaller and smaller sub-functions.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔀</span>
+        <div class="card-title">Data Separation</div>
+        <div class="card-body">The problem logic is kept separate from data representation — a key limitation of this approach.</div>
+      </div>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">Example Method — SADT</div>
+      <p><strong>Structured Analysis and Design Technique</strong> is a classic functional decomposition method that uses hierarchical diagrams to break a main program into a tree of sub-functions.</p>
+    </div>
+
+    <div class="diagram-area">
+      <svg width="580" height="260" viewBox="0 0 580 260" xmlns="http://www.w3.org/2000/svg">
+        <style>
+          .box { rx:6; ry:6; fill:#1c2030; stroke:#5b8def; stroke-width:1.5; }
+          .box-text { fill:#e8eaf0; font-size:12px; text-anchor:middle; }
+          .lbl { fill:#7a82a0; font-size:10px; text-anchor:middle; }
+          line { stroke:#7a82a0; stroke-width:1; }
+        </style>
+        <rect x="190" y="10" width="200" height="40" class="box"/>
+        <text x="290" y="36" class="box-text">Main Program</text>
+        <line x1="290" y1="50" x2="290" y2="75"/>
+        <line x1="100" y1="75" x2="480" y2="75"/>
+        <line x1="100" y1="75" x2="100" y2="100"/>
+        <line x1="290" y1="75" x2="290" y2="100"/>
+        <line x1="480" y1="75" x2="480" y2="100"/>
+        <rect x="30" y="100" width="140" height="36" class="box"/>
+        <text x="100" y="124" class="box-text">Sub-function 1</text>
+        <rect x="210" y="100" width="160" height="36" class="box"/>
+        <text x="290" y="124" class="box-text">Sub-function 2</text>
+        <rect x="410" y="100" width="140" height="36" class="box"/>
+        <text x="480" y="124" class="box-text">Sub-function 3</text>
+        <line x1="100" y1="136" x2="100" y2="160"/>
+        <line x1="60" y1="160" x2="140" y2="160"/>
+        <line x1="60" y1="160" x2="60" y2="185"/>
+        <line x1="140" y1="160" x2="140" y2="185"/>
+        <line x1="480" y1="136" x2="480" y2="160"/>
+        <line x1="445" y1="160" x2="520" y2="160"/>
+        <line x1="445" y1="160" x2="445" y2="185"/>
+        <line x1="520" y1="160" x2="520" y2="185"/>
+        <rect x="10" y="185" width="100" height="34" class="box"/>
+        <text x="60" y="207" class="box-text">Fn 1.1</text>
+        <rect x="90" y="185" width="100" height="34" class="box"/>
+        <text x="140" y="207" class="box-text">Fn 1.2</text>
+        <rect x="400" y="185" width="90" height="34" class="box"/>
+        <text x="445" y="207" class="box-text">Fn 3.1</text>
+        <rect x="475" y="185" width="90" height="34" class="box"/>
+        <text x="520" y="207" class="box-text">Fn 3.2</text>
+        <text x="290" y="252" class="lbl">Hierarchical top-down decomposition</text>
+      </svg>
+    </div>
+
+    <h3>Limitation of Functional Decomposition</h3>
+    <p>When the system's functions change, the <strong>entire hierarchy can collapse</strong>. Data and behavior are disconnected, making maintenance difficult. This led to the rise of the object-oriented approach.</p>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="show('languages')">← Back</button>
+      <button class="btn-nav primary" onclick="show('oo')">Next: OO Paradigm →</button>
+    </div>
+  </div>
+
+  <!-- 04 OO -->
+  <div id="oo" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:36%"></div></div>
+    <div class="section-tag">04 · OOP</div>
+    <h2>The Object-Oriented Paradigm</h2>
+
+    <p>Object-oriented modeling shifts focus from <em>what a system does</em> to <em>what a system is made of</em>. Everything is modeled as an <strong>object</strong> that belongs to a <strong>class</strong>.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">📦</span>
+        <div class="card-title">Object</div>
+        <div class="card-body">An instance with three aspects:<br><strong>Identity</strong> (who it is) + <strong>State</strong> (its data) + <strong>Behavior</strong> (what it does)</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🏛️</span>
+        <div class="card-title">Class</div>
+        <div class="card-body">A <strong>blueprint</strong> — a grouping of objects that share the same structure and behavior.</div>
+      </div>
+    </div>
+
+    <h3>Example: A Class and Its Objects</h3>
+
+    <div class="diagram-area" style="display:flex; justify-content:center; align-items:flex-start; gap:32px; flex-wrap:wrap;">
+      <div>
+        <div class="uml-class" style="width:200px;">
+          <div class="uml-class-name">Car</div>
+          <div class="uml-class-section">
+            <div>— brand : String</div>
+            <div>— speed : int</div>
+            <div>— color : String</div>
+          </div>
+          <div class="uml-class-section">
+            <div>+ accelerate()</div>
+            <div>+ brake()</div>
+            <div>+ getSpeed()</div>
+          </div>
+        </div>
+        <div style="text-align:center; font-family:'DM Mono',monospace; font-size:11px; color:var(--blue); margin-top:8px;">«class»</div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:16px; margin-top:8px;">
+        <div style="background:var(--surface); border:1px solid var(--green); border-radius:8px; padding:12px 20px; font-family:'DM Mono',monospace; font-size:12px; color:var(--muted);">
+          <div style="color:var(--green); margin-bottom:4px;">myCar : Car</div>
+          brand = "Toyota"<br>speed = 80<br>color = "Red"
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--green); border-radius:8px; padding:12px 20px; font-family:'DM Mono',monospace; font-size:12px; color:var(--muted);">
+          <div style="color:var(--green); margin-bottom:4px;">yourCar : Car</div>
+          brand = "BMW"<br>speed = 120<br>color = "Blue"
+        </div>
+      </div>
+    </div>
+
+    <h3>Relationships Between Classes</h3>
+    <p>Objects don't exist in isolation — they are connected through different types of relationships:</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Association</div>
+        <div class="card-body">A general relationship — "A uses B". E.g., a Student uses a Library.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Aggregation</div>
+        <div class="card-body">A "has-a" relationship where parts can exist independently. E.g., a Team has Players.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Composition</div>
+        <div class="card-body">A strong "made-of" relationship. Parts cannot exist without the whole. E.g., a House has Rooms.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Inheritance</div>
+        <div class="card-body">A "is-a" relationship. E.g., an ElectricCar is-a Car — it inherits all Car properties.</div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="show('functional')">← Back</button>
+      <button class="btn-nav primary" onclick="show('principles')">Next: Core Principles →</button>
+    </div>
+  </div>
+
+  <!-- 05 PRINCIPLES -->
+  <div id="principles" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:45%"></div></div>
+    <div class="section-tag">05 · OOP</div>
+    <h2>Core OOP Principles</h2>
+
+    <p>The object-oriented paradigm is built on three foundational principles that make software more modular, reusable, and maintainable.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">🔒</span>
+        <div class="card-title">Encapsulation</div>
+        <div class="card-body">Bundling data and methods together, <strong>hiding internal details</strong>. Objects expose only what's necessary through a public interface. Protects data integrity.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🧬</span>
+        <div class="card-title">Inheritance</div>
+        <div class="card-body">A child class <strong>inherits</strong> attributes and methods from a parent class. Promotes code reuse. Example: <code>Dog</code> inherits from <code>Animal</code>.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎭</span>
+        <div class="card-title">Polymorphism</div>
+        <div class="card-body">The same method name can behave <strong>differently</strong> depending on the object. E.g., <code>speak()</code> says "Woof" for Dog and "Meow" for Cat.</div>
+      </div>
+    </div>
+
+    <h3>Encapsulation in Code</h3>
+    <div class="code-block">
+<span class="kw">class</span> <span class="cn">BankAccount</span> {
+  <span class="cm">// Private — hidden from outside</span>
+  <span class="kw">private</span> balance: <span class="kw">float</span>
+
+  <span class="cm">// Public — accessible interface</span>
+  <span class="kw">public</span> deposit(amount: <span class="kw">float</span>) {
+    <span class="kw">if</span> (amount &gt; 0) balance += amount
+  }
+
+  <span class="kw">public</span> getBalance(): <span class="kw">float</span> {
+    <span class="kw">return</span> balance
+  }
+}
+    </div>
+
+    <h3>Inheritance in Code</h3>
+    <div class="code-block">
+<span class="kw">class</span> <span class="cn">Animal</span> {
+  name: <span class="kw">String</span>
+  speak(): <span class="kw">void</span>   <span class="cm">// abstract</span>
+}
+
+<span class="kw">class</span> <span class="cn">Dog</span> <span class="kw">extends</span> <span class="cn">Animal</span> {
+  speak(): <span class="kw">void</span> { print(<span class="st">"Woof!"</span>) }
+}
+
+<span class="kw">class</span> <span class="cn">Cat</span> <span class="kw">extends</span> <span class="cn">Animal</span> {
+  speak(): <span class="kw">void</span> { print(<span class="st">"Meow!"</span>) }
+}
+
+<span class="cm">// Polymorphism: same call, different results</span>
+animals.forEach(a => a.speak())
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="show('oo')">← Back</button>
+      <button class="btn-nav primary" onclick="show('uml')">Next: UML →</button>
+    </div>
+  </div>
+
+  <!-- 06 UML -->
+  <div id="uml" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:54%"></div></div>
+    <div class="section-tag">06 · UML</div>
+    <h2>Introduction to UML</h2>
+
+    <div class="def-box">
+      <div class="def-label">Official Definition — OMG</div>
+      <p><strong>UML</strong> (Unified Modeling Language) is a standard visual language dedicated to specifying, constructing, and documenting software systems.</p>
+    </div>
+
+    <h3>History</h3>
+    <p>UML was created in <strong>1997</strong> as a unification of three previously competing notations: <strong>Booch</strong>, <strong>OMT</strong>, and <strong>OOSE</strong>. It is standardized by the <strong>Object Management Group (OMG)</strong>, founded in 1989.</p>
+
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin: 20px 0;">
+      <span class="pill gold">UML 1.0 — 1997 (9 diagrams)</span>
+      <span class="pill blue">UML 2.0 — 2005 (13 diagrams)</span>
+      <span class="pill">UML 2.5.1 — Dec 2017 (14 diagrams)</span>
+    </div>
+
+    <h3>UML Has Three Aspects</h3>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">📖</span>
+        <div class="card-title">A Language</div>
+        <div class="card-body">UML has a <strong>syntax</strong> (writing rules) and standardized graphical notations, just like a programming language.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔍</span>
+        <div class="card-title">For Modeling</div>
+        <div class="card-body">It abstracts system <strong>structure and behavior</strong> — it handles specification and design, not implementation.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🤝</span>
+        <div class="card-title">Unified</div>
+        <div class="card-body">It merges multiple prior notations into <strong>one standard</strong>, maintained by the OMG and used worldwide.</div>
+      </div>
+    </div>
+
+    <h3>What UML Is NOT</h3>
+    <div class="def-box" style="border-left-color: var(--red);">
+      <div class="def-label" style="color:var(--red);">Important Distinction</div>
+      <p>UML is <strong>a language, not a methodology</strong>. It tells you <em>how to draw</em> diagrams, but not <em>how to run</em> a software project. For methodology, you need something like UP (Unified Process).</p>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="show('principles')">← Back</button>
+      <button class="btn-nav primary" onclick="show('diagrams')">Next: UML Diagrams →</button>
+    </div>
+  </div>
+
+  <!-- 07 DIAGRAMS -->
+  <div id="diagrams" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:63%"></div></div>
+    <div class="section-tag">07 · UML</div>
+    <h2>UML 2.5 Diagrams</h2>
+
+    <p>UML 2.5 provides <strong>14 diagram types</strong>, organized into two major families: <strong>Structure</strong> diagrams (what the system IS) and <strong>Behavior</strong> diagrams (how the system EVOLVES).</p>
+
+    <div class="diagram-area">
+      <svg width="560" height="300" viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg">
+        <style>
+          .dbox { rx:6; ry:6; }
+          .dt { font-size:11px; text-anchor:middle; fill:#e8eaf0; }
+          .dc { font-size:9px; text-anchor:middle; fill:#7a82a0; }
+          .dl { stroke:#7a82a0; stroke-width:1; fill:none; }
+          .root { fill:#1c2030; stroke:#3ddc84; stroke-width:2; }
+          .struct { fill:#1c2030; stroke:#5b8def; stroke-width:1.5; }
+          .behav { fill:#1c2030; stroke:#f0b429; stroke-width:1.5; }
+          .leaf { fill:#141720; stroke:#252a3a; stroke-width:1; }
+        </style>
+        <rect x="195" y="8" width="170" height="32" class="dbox root"/>
+        <text x="280" y="30" class="dt">UML Diagram</text>
+        <line x1="280" y1="40" x2="280" y2="60" class="dl"/>
+        <line x1="110" y1="60" x2="450" y2="60" class="dl"/>
+        <line x1="110" y1="60" x2="110" y2="80" class="dl"/>
+        <rect x="28" y="80" width="164" height="30" class="dbox struct"/>
+        <text x="110" y="101" class="dt">Structure Diagrams</text>
+        <line x1="450" y1="60" x2="450" y2="80" class="dl"/>
+        <rect x="368" y="80" width="164" height="30" class="dbox behav"/>
+        <text x="450" y="101" class="dt">Behavior Diagrams</text>
+        <line x1="110" y1="110" x2="110" y2="125" class="dl"/>
+        <line x1="40" y1="125" x2="180" y2="125" class="dl"/>
+        <line x1="40" y1="125" x2="40" y2="145" class="dl"/>
+        <line x1="110" y1="125" x2="110" y2="145" class="dl"/>
+        <line x1="180" y1="125" x2="180" y2="145" class="dl"/>
+        <rect x="2" y="145" width="76" height="26" class="dbox leaf"/>
+        <text x="40" y="163" class="dc">Class Diagram</text>
+        <rect x="72" y="145" width="76" height="26" class="dbox leaf"/>
+        <text x="110" y="163" class="dc">Object Diagram</text>
+        <rect x="142" y="145" width="76" height="26" class="dbox leaf"/>
+        <text x="180" y="163" class="dc">Component Diag.</text>
+        <line x1="40" y1="125" x2="40" y2="195" class="dl" stroke-dasharray="3"/>
+        <rect x="2" y="195" width="76" height="26" class="dbox leaf"/>
+        <text x="40" y="213" class="dc">Package Diagram</text>
+        <rect x="72" y="195" width="76" height="26" class="dbox leaf"/>
+        <text x="110" y="213" class="dc" dy="-6">Deployment</text>
+        <text x="110" y="213" class="dc" dy="6">Diagram</text>
+        <line x1="450" y1="110" x2="450" y2="125" class="dl"/>
+        <line x1="370" y1="125" x2="530" y2="125" class="dl"/>
+        <line x1="370" y1="125" x2="370" y2="145" class="dl"/>
+        <line x1="450" y1="125" x2="450" y2="145" class="dl"/>
+        <line x1="530" y1="125" x2="530" y2="145" class="dl"/>
+        <rect x="332" y="145" width="76" height="26" class="dbox leaf"/>
+        <text x="370" y="163" class="dc">Use Case Diag.</text>
+        <rect x="412" y="145" width="76" height="26" class="dbox leaf"/>
+        <text x="450" y="163" class="dc">Activity Diagram</text>
+        <rect x="492" y="145" width="68" height="26" class="dbox leaf"/>
+        <text x="526" y="163" class="dc">State Machine</text>
+        <line x1="450" y1="195" x2="450" y2="215" class="dl" stroke-dasharray="3"/>
+        <rect x="372" y="215" width="156" height="28" class="dbox" style="fill:#1c2030;stroke:#f0b429;stroke-width:1;"/>
+        <text x="450" y="234" class="dt" style="font-size:10px;">Interaction Diagrams</text>
+        <line x1="450" y1="243" x2="450" y2="258" class="dl"/>
+        <line x1="393" y1="258" x2="510" y2="258" class="dl"/>
+        <line x1="393" y1="258" x2="393" y2="272" class="dl"/>
+        <line x1="510" y1="258" x2="510" y2="272" class="dl"/>
+        <rect x="354" y="272" width="78" height="22" class="dbox leaf"/>
+        <text x="393" y="287" class="dc">Sequence Diag.</text>
+        <rect x="472" y="272" width="78" height="22" class="dbox leaf"/>
+        <text x="511" y="287" class="dc">Comm. Diagram</text>
+      </svg>
+    </div>
+
+    <h3>The Three Modeling Perspectives</h3>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">🏛️</span>
+        <div class="card-title" style="color:var(--blue)">Static (What it IS)</div>
+        <div class="card-body">Class Diagram, Object Diagram — describe the <strong>structure</strong> of the system at a given moment.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">⚡</span>
+        <div class="card-title" style="color:var(--gold)">Functional (What it DOES)</div>
+        <div class="card-body">Use Case Diagram — describes the <strong>services</strong> the system provides to its users.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌊</span>
+        <div class="card-title" style="color:var(--green)">Dynamic (How it EVOLVES)</div>
+        <div class="card-body">Sequence, Activity, State Diagrams — show <strong>behavior over time</strong> and interactions.</div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="show('uml')">← Back</button>
+      <button class="btn-nav primary" onclick="show('usage')">Next: Using UML →</button>
+    </div>
+  </div>
+
+  <!-- 08 USAGE -->
+  <div id="usage" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
+    <div class="section-tag">08 · UML</div>
+    <h2>Using UML in Practice</h2>
+
+    <p>Different UML diagrams are used at different phases of software development. Here's which diagram to use and when:</p>
+
+    <h3>Analysis & Specification Phase</h3>
+    <p>When gathering and documenting requirements:</p>
+
+    <table>
+      <thead><tr><th>Diagram</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill blue">Use Case Diagram (DCU)</span></td><td>Capture user needs and what the system must do</td></tr>
+        <tr><td><span class="pill blue">Sequence Diagram (DSE)</span></td><td>Show interactions between user and system (from outside)</td></tr>
+        <tr><td><span class="pill blue">Activity Diagram (DAC)</span></td><td>Represent a chain of actions / workflow</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Design Phase</h3>
+    <p>When designing the internal architecture of the software:</p>
+
+    <table>
+      <thead><tr><th>Diagram</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill">Class Diagram (DCL)</span></td><td>Internal structure of the software</td></tr>
+        <tr><td><span class="pill">Object Diagram</span></td><td>Internal state at a given point in time</td></tr>
+        <tr><td><span class="pill">State-Transition Diagram</span></td><td>How the state of an object evolves</td></tr>
+        <tr><td><span class="pill">Sequence Diagram (DSE)</span></td><td>Interactions inside the software between objects</td></tr>
+        <tr><td><span class="pill">Deployment Diagram</span></td><td>Physical components and infrastructure</td></tr>
+      </tbody>
+    </table>
+
+    <h3>The Class Diagram — Most Used</h3>
+    <p>The class diagram is the heart of object-oriented design. Here's its structure:</p>
+
+    <div class="diagram-area">
+      <div class="uml-class" style="width:260px; margin:0 auto;">
+        <div class="uml-class-name">ClassName</div>
+        <div class="uml-class-section">
+          <div style="color:var(--muted); font-size:11px; margin-bottom:4px;">— Attributes —</div>
+          <div>− privateAttr : Type</div>
+          <div>+ publicAttr : Type</div>
+          <div># protectedAttr : Type</div>
+        </div>
+        <div class="uml-class-section">
+          <div style="color:var(--muted); font-size:11px; margin-bottom:4px;">— Methods —</div>
+          <div>+ method1() : ReturnType</div>
+          <div>− method2(param: Type)</div>
+        </div>
+      </div>
+      <p style="margin-top:16px; font-size:13px;">Visibility: <span class="pill">− private</span> <span class="pill blue">+ public</span> <span class="pill gold"># protected</span></p>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="show('diagrams')">← Back</button>
+      <button class="btn-nav primary" onclick="show('sysml')">Next: SysML vs UML →</button>
+    </div>
+  </div>
+
+  <!-- 09 SYSML -->
+  <div id="sysml" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:81%"></div></div>
+    <div class="section-tag">09 · UML</div>
+    <h2>SysML vs UML</h2>
+
+    <p><strong>SysML</strong> (Systems Modeling Language) is a language derived from UML, designed for broader systems engineering — not just software.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">🔧</span>
+        <div class="card-title">Derived from UML</div>
+        <div class="card-body">SysML reuses <strong>7 UML diagrams</strong> and adds <strong>2 new ones</strong> specific to systems engineering.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🏭</span>
+        <div class="card-title">Broader Scope</div>
+        <div class="card-body">Targets <strong>mechanical, electronic, and software</strong> components — not just code. Uses "blocks" instead of classes.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">✂️</span>
+        <div class="card-title">Lighter Syntax</div>
+        <div class="card-body">Removes some UML constructs that are irrelevant to hardware/systems, making it <strong>simpler to use</strong> in engineering contexts.</div>
+      </div>
+    </div>
+
+    <h3>Key Differences</h3>
+    <table>
+      <thead><tr><th>Feature</th><th>UML</th><th>SysML</th></tr></thead>
+      <tbody>
+        <tr><td>Primary domain</td><td>Software systems</td><td>Any engineered system</td></tr>
+        <tr><td>Core building block</td><td>Class</td><td>Block</td></tr>
+        <tr><td>Number of diagrams</td><td>14</td><td>9 (7 from UML + 2 new)</td></tr>
+        <tr><td>Requirements modeling</td><td>Limited (via use cases)</td><td>Native Requirements Diagram</td></tr>
+        <tr><td>Parametric modeling</td><td>Not supported</td><td>Parametric Diagram</td></tr>
+      </tbody>
+    </table>
+
+    <div class="def-box">
+      <div class="def-label">When to Use Which</div>
+      <p>Use <strong>UML</strong> for pure software projects. Use <strong>SysML</strong> when your system involves hardware, embedded systems, robotics, or any mix of physical and digital components.</p>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="show('usage')">← Back</button>
+      <button class="btn-nav primary" onclick="show('up')">Next: UML vs UP →</button>
+    </div>
+  </div>
+
+  <!-- 10 UP -->
+  <div id="up" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
+    <div class="section-tag">10 · Process</div>
+    <h2>UML vs Unified Process (UP)</h2>
+
+    <div class="def-box" style="border-left-color: var(--red);">
+      <div class="def-label" style="color:var(--red);">Critical Distinction</div>
+      <p><strong>UML is NOT a methodology.</strong> It's a notation. The <strong>Unified Process (UP)</strong> is the methodology that tells you <em>how</em> to develop software, while UML provides the <em>language</em> to describe it.</p>
+    </div>
+
+    <h3>The 4 Phases of UP</h3>
+    <div class="card-grid">
+      <div class="card" style="border-left: 3px solid var(--red);">
+        <span class="card-icon">🚀</span>
+        <div class="card-title" style="color:var(--red)">1. Inception</div>
+        <div class="card-body">Launch the project, identify risks, assess feasibility. Define the project scope and make the go/no-go decision.</div>
+      </div>
+      <div class="card" style="border-left: 3px solid var(--gold);">
+        <span class="card-icon">📐</span>
+        <div class="card-title" style="color:var(--gold)">2. Elaboration</div>
+        <div class="card-body">Specify requirements, define the architecture, and set quality targets. The most critical phase.</div>
+      </div>
+      <div class="card" style="border-left: 3px solid var(--blue);">
+        <span class="card-icon">🔨</span>
+        <div class="card-title" style="color:var(--blue)">3. Construction</div>
+        <div class="card-body">Build the first complete version of the software through iterative development sprints.</div>
+      </div>
+      <div class="card" style="border-left: 3px solid var(--green);">
+        <span class="card-icon">🚢</span>
+        <div class="card-title">4. Transition</div>
+        <div class="card-body">Deploy to users, test in production, fix bugs, configure, and train users.</div>
+      </div>
+    </div>
+
+    <h3>UP Characteristics</h3>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin: 16px 0;">
+      <span class="pill">Iterative</span>
+      <span class="pill blue">Incremental</span>
+      <span class="pill gold">Generic (adaptable)</span>
+    </div>
+    <p>Because UP is generic, it has many specific variants adapted for different contexts:</p>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin: 16px 0;">
+      <span class="pill">RUP — Rational UP</span>
+      <span class="pill">XUP — eXtreme UP</span>
+      <span class="pill">2TUP — 2-Track UP</span>
+      <span class="pill">EUP — Enterprise UP</span>
+    </div>
+
+    <div class="def-box">
+      <div class="def-label">Summary</div>
+      <p><strong>UML</strong> = the pencil. <strong>UP</strong> = the architectural process. You need both: a language to express your designs, and a process to guide your development.</p>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="show('sysml')">← Back</button>
+      <button class="btn-nav primary" onclick="show('quiz')">Take the Quiz →</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    <div class="section-tag">✦ · Review</div>
+    <h2>Quick Quiz</h2>
+    <p>Test your understanding of Object-Oriented Modeling and UML. Click an answer to check it.</p>
+
+    <div class="quiz-question" id="q1">
+      <div class="quiz-q">1. What are the three aspects of an Object in OOP?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this,'wrong','q1')">Class + Method + Attribute</button>
+        <button class="quiz-option" onclick="answer(this,'correct','q1')">Identity + State + Behavior</button>
+        <button class="quiz-option" onclick="answer(this,'wrong','q1')">Name + Type + Value</button>
+        <button class="quiz-option" onclick="answer(this,'wrong','q1')">Encapsulation + Inheritance + Polymorphism</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q1"></div>
+    </div>
+
+    <div class="quiz-question" id="q2">
+      <div class="quiz-q">2. UML 2.5 contains how many diagram types?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this,'wrong','q2')">9</button>
+        <button class="quiz-option" onclick="answer(this,'wrong','q2')">10</button>
+        <button class="quiz-option" onclick="answer(this,'wrong','q2')">12</button>
+        <button class="quiz-option" onclick="answer(this,'correct','q2')">14</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q2"></div>
+    </div>
+
+    <div class="quiz-question" id="q3">
+      <div class="quiz-q">3. Which OOP principle bundles data and methods together and hides internal details?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this,'wrong','q3')">Polymorphism</button>
+        <button class="quiz-option" onclick="answer(this,'wrong','q3')">Inheritance</button>
+        <button class="quiz-option" onclick="answer(this,'correct','q3')">Encapsulation</button>
+        <button class="quiz-option" onclick="answer(this,'wrong','q3')">Abstraction</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q3"></div>
+    </div>
+
+    <div class="quiz-question" id="q4">
+      <div class="quiz-q">4. What is the correct statement about UML?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this,'wrong','q4')">UML is a programming language</button>
+        <button class="quiz-option" onclick="answer(this,'wrong','q4')">UML is a software development methodology</button>
+        <button class="quiz-option" onclick="answer(this,'correct','q4')">UML is a standard visual modeling language, not a methodology</button>
+        <button class="quiz-option" onclick="answer(this,'wrong','q4')">UML replaces the need for software design</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q4"></div>
+    </div>
+
+    <div class="quiz-question" id="q5">
+      <div class="quiz-q">5. In UP (Unified Process), which phase involves deploying to users and training?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this,'wrong','q5')">Inception</button>
+        <button class="quiz-option" onclick="answer(this,'wrong','q5')">Elaboration</button>
+        <button class="quiz-option" onclick="answer(this,'wrong','q5')">Construction</button>
+        <button class="quiz-option" onclick="answer(this,'correct','q5')">Transition</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q5"></div>
+    </div>
+
+    <div id="quiz-score" style="display:none; background:var(--surface2); border:1px solid var(--green); border-radius:12px; padding:24px; margin-top:24px; text-align:center;">
+      <div style="font-family:'Playfair Display',serif; font-size:28px; color:var(--green); margin-bottom:8px;" id="score-num"></div>
+      <div style="color:var(--muted); font-size:14px;" id="score-msg"></div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="show('up')">← Review Last Section</button>
+      <button class="btn-nav primary" onclick="show('home')">Back to Start ↩</button>
+    </div>
+  </div>
+
+</main>
+
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  const sections = ['home','modeling','languages','functional','oo','principles','uml','diagrams','usage','sysml','up','quiz'];
+  const visited = new Set(JSON.parse(localStorage.getItem('oop_visited') || '["home"]'));
+
+  function show(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.sidebar .nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.sidebar .nav-item').forEach(n => {
+      if(n.getAttribute('onclick') && n.getAttribute('onclick').includes("'"+id+"'")) {
+        n.classList.add('active');
+      }
+    });
+    visited.add(id);
+    localStorage.setItem('oop_visited', JSON.stringify([...visited]));
+    updateCheckmarks();
+    window.scrollTo(0,0);
+    if (window.innerWidth <= 768) {
+      document.getElementById('sidebar').classList.remove('open');
+    }
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  function updateCheckmarks() {
+    document.querySelectorAll('.nav-item[data-section]').forEach(item => {
+      if (visited.has(item.getAttribute('data-section'))) {
+        item.classList.add('visited');
+      }
+    });
+  }
+  updateCheckmarks();
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    const current = sections.find(s => document.getElementById(s)?.classList.contains('active'));
+    const idx = sections.indexOf(current);
+    if (e.key === 'ArrowRight' && idx < sections.length - 1) show(sections[idx + 1]);
+    if (e.key === 'ArrowLeft' && idx > 0) show(sections[idx - 1]);
+  });
+
+  // Scroll-to-top & reading progress
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 300);
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docH > 0 ? Math.min(100, (window.scrollY / docH) * 100) : 0;
+    document.getElementById('readingProgress').style.width = pct + '%';
+  });
+
+  const feedbacks = {
+    q1: { correct: "✓ Correct! Every object has a unique identity, a state (its data/attributes), and behavior (its methods).", wrong: "✗ Not quite. In OOP, an object is defined by its Identity, State, and Behavior." },
+    q2: { correct: "✓ Correct! UML 2.5 expanded from 9 diagrams (UML 1.0) to 14 diagram types.", wrong: "✗ Not quite. UML 1.0 had 9 diagrams. UML 2.5 has 14 diagram types." },
+    q3: { correct: "✓ Correct! Encapsulation bundles data + methods and hides internal details behind a public interface.", wrong: "✗ Not quite. Encapsulation is the principle of hiding internal details and bundling data with methods." },
+    q4: { correct: "✓ Correct! UML is a language (notation), not a methodology. It doesn't tell you how to run a project — UP does.", wrong: "✗ Not quite. UML is a visual modeling language, not a programming language or methodology." },
+    q5: { correct: "✓ Correct! The Transition phase covers deployment, testing in production, bug fixes, and user training.", wrong: "✗ Not quite. The Transition phase is when the software is deployed to actual users and refined." }
+  };
+
+  let answered = {};
+  let correct = 0;
+  let total = 5;
+
+  function answer(btn, result, qid) {
+    if (answered[qid]) return;
+    answered[qid] = true;
+    const opts = btn.closest('.quiz-question').querySelectorAll('.quiz-option');
+    opts.forEach(o => o.style.pointerEvents = 'none');
+    btn.classList.add(result);
+    // Highlight correct answer if wrong
+    if (result === 'wrong') {
+      opts.forEach(o => {
+        if (o.getAttribute('onclick')?.includes("'correct'")) o.classList.add('correct');
+      });
+    }
+    const fb = document.getElementById('fb-' + qid);
+    fb.textContent = feedbacks[qid][result];
+    fb.className = 'quiz-feedback ' + result;
+    fb.style.display = 'block';
+    if (result === 'correct') correct++;
+    if (Object.keys(answered).length === total) showScore();
+  }
+
+  function showScore() {
+    const el = document.getElementById('quiz-score');
+    el.style.display = 'block';
+    document.getElementById('score-num').textContent = correct + ' / ' + total + ' Correct';
+    const starCount = Math.round((correct / total) * 5);
+    const starsEl = document.getElementById('quiz-stars');
+    if (starsEl) starsEl.textContent = '★'.repeat(starCount) + '☆'.repeat(5 - starCount);
+    const msgs = ['Keep studying — go back through the sections!', 'Good start! Review the sections you missed.', 'Not bad! A few more reviews and you\'ll nail it.', 'Great job! You understand the fundamentals well.', 'Perfect score! You\'ve mastered OO Modeling! 🎉'];
+    document.getElementById('score-msg').textContent = msgs[correct];
+    if (correct >= 4) fireConfetti();
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function fireConfetti() {
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const pieces = [];
+    const colors = ['#3ddc84','#5b8def','#f0b429','#e05f5f','#e8eaf0'];
+    for (let i = 0; i < 120; i++) {
+      pieces.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height - canvas.height, w: Math.random()*8+4, h: Math.random()*4+2, color: colors[Math.floor(Math.random()*colors.length)], vx: (Math.random()-0.5)*4, vy: Math.random()*3+2, rot: Math.random()*360, vrot: (Math.random()-0.5)*10, opacity: 1 });
+    }
+    let frame = 0;
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => { p.x+=p.vx; p.y+=p.vy; p.rot+=p.vrot; p.vy+=0.05; if(frame>80) p.opacity-=0.015; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180); ctx.globalAlpha=Math.max(0,p.opacity); ctx.fillStyle=p.color; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore(); });
+      frame++;
+      if (frame < 160) requestAnimationFrame(animate);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    animate();
+  }
+</script>
+</body>
+</html>

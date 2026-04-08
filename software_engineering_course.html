@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GL1 – Introduction to Software Engineering</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  /* Reading progress bar sits right below fixed header */
+  .reading-progress { top: 52px; }
+</style>
+</head>
+<body>
+
+<!-- UNIFIED HEADER -->
+<header class="site-header">
+  <a class="site-header-brand" href="index.html">GL · Courses</a>
+  <button class="site-header-toggle" onclick="document.querySelector('.site-header-nav').classList.toggle('open')">☰</button>
+  <nav class="site-header-nav">
+    <a href="software_engineering_course.html" class="active"><span class="nav-num">01</span> Intro to SE</a>
+    <a href="oop-uml-course.html"><span class="nav-num">02</span> OOP & UML</a>
+    <a href="uml-ucd-tutorial.html"><span class="nav-num">03</span> Use Case Diagrams</a>
+  </nav>
+</header>
+
+<button class="hamburger" onclick="toggleSidebar()">☰</button>
+
+<div class="reading-progress"><div class="reading-progress-fill" id="readingProgress"></div></div>
+<canvas id="confetti-canvas"></canvas>
+
+<nav class="sidebar" id="sidebar">
+  <div class="logo">
+    <span class="logo-label">GL · Course 1</span>
+    <div class="logo-title">Software<br>Engineering</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Chapter 1</div>
+    <a class="nav-item active" onclick="showSection('overview')" data-section="overview"><span class="nav-num">00</span>Overview<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="showSection('definitions')" data-section="definitions"><span class="nav-num">01</span>Definitions<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="showSection('qualities')" data-section="qualities"><span class="nav-num">02</span>Software Qualities<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="showSection('environment')" data-section="environment"><span class="nav-num">03</span>Environment & Actors<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="showSection('crisis')" data-section="crisis"><span class="nav-num">04</span>Software Crisis<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="showSection('process')" data-section="process"><span class="nav-num">05</span>Dev Process<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="showSection('needs')" data-section="needs"><span class="nav-num">06</span>Functional vs NF<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="showSection('quiz')" data-section="quiz"><span class="nav-num">✦</span>Practice Quiz<span class="check-icon">✓</span></a>
+  </div>
+
+  <div class="nav-section" style="margin-top:auto; padding-top:16px;">
+    <div class="nav-section-title">Progress</div>
+    <div id="progressText" style="color:var(--muted); font-size:12px; padding:0 8px; margin-bottom:6px;">0 / 8 sections viewed</div>
+    <div style="padding:0 8px;">
+      <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+
+  <!-- HERO -->
+  <div id="section-overview" class="section active hero">
+    <div class="hero-tag">Course 1 · Chap 1</div>
+    <h1>Introduction to<br><em>Software Engineering</em></h1>
+    <p>Learn the foundations of Software Engineering (Génie Logiciel): what software is, why it's hard to build well, and how structured processes help teams deliver quality software.</p>
+
+    <div style="display:flex; gap:32px; margin-top:40px;">
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:32px; font-weight:900; color:var(--green);">8</div>
+        <div style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase;">Topics</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:32px; font-weight:900; color:var(--green);">4</div>
+        <div style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase;">Dev Models</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:32px; font-weight:900; color:var(--green);">11</div>
+        <div style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase;">Quality Factors</div>
+      </div>
+    </div>
+
+    <div class="toc-grid" style="margin-top:48px;">
+      <div class="toc-card" onclick="showSection('definitions')">
+        <div class="toc-card-num">01 — 02</div>
+        <div class="toc-card-title">Definitions & Qualities</div>
+      </div>
+      <div class="toc-card" onclick="showSection('environment')">
+        <div class="toc-card-num">03 — 04</div>
+        <div class="toc-card-title">Environment & Crisis</div>
+      </div>
+      <div class="toc-card" onclick="showSection('process')">
+        <div class="toc-card-num">05 — 06</div>
+        <div class="toc-card-title">Process & Requirements</div>
+      </div>
+      <div class="toc-card" onclick="showSection('quiz')">
+        <div class="toc-card-num">✦</div>
+        <div class="toc-card-title">Practice Quiz</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEFINITIONS -->
+  <div id="section-definitions" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:12%"></div></div>
+    <div class="section-tag">01 · Core Concepts</div>
+    <div class="reading-time">3 min read</div>
+    <h2>What is Software Engineering?</h2>
+    <p>Before defining <span class="term-tip" data-tip="Génie Logiciel — The engineering discipline applied to software development">Software Engineering</span> (GL), let's understand its two components.</p>
+
+    <div class="two-col">
+      <div class="info-box">
+        <h4>🖥️ What is Software?</h4>
+        <ul>
+          <li>Programs (executable code)</li>
+          <li>Data (inputs, databases)</li>
+          <li>Documents (design, architecture, test reports, user manuals, installation guides…)</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h4>⚗️ What is Engineering?</h4>
+        <ul>
+          <li>Developing products using well-defined scientific principles</li>
+          <li>Satisfying constraints of cost, quality, security</li>
+          <li>Applied in many sectors: civil, electrical, aeronautics, mechanical…</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box">💡 Core Idea: Apply classical engineering methods and discipline to the field of computer software development.</div>
+
+    <h3>Four Definitions of Software Engineering</h3>
+
+    <div class="def-block">
+      <div class="def-num">01</div>
+      <div><h3>A <strong>set of methods, techniques and tools</strong> dedicated to the design, development and maintenance of software.</h3></div>
+    </div>
+    <div class="def-block">
+      <div class="def-num">02</div>
+      <div><h3>A <strong>discipline of computer science</strong> that groups knowledge, processes, and scientific achievements for the design, implementation, verification, and documentation of software with the aim of <strong>optimizing its production and quality</strong>.</h3></div>
+    </div>
+    <div class="def-block">
+      <div class="def-num">03</div>
+      <div><h3>Using engineering principles to obtain <strong>economical, reliable and efficient</strong> software on real machines.</h3></div>
+    </div>
+    <div class="def-block">
+      <div class="def-num">04</div>
+      <div><h3>The discipline that applies engineering methods to <strong>design, develop, maintain and test</strong> software that should be reliable, efficient, and <strong>tailored to user needs</strong>.</h3></div>
+    </div>
+
+    <h3>Objectives & Challenges</h3>
+    <div class="card-grid">
+      <div class="card"><span class="card-icon">💰</span><div class="card-title">Optimize Cost & Time</div><div class="card-body">Deliver software within the agreed budget and schedule.</div></div>
+      <div class="card"><span class="card-icon">👥</span><div class="card-title">Meet Customer Needs</div><div class="card-body">Build what the client actually needs, not just what was initially stated.</div></div>
+      <div class="card"><span class="card-icon">📅</span><div class="card-title">Meet Deadlines</div><div class="card-body">Deliver on time through proper planning and tracking.</div></div>
+      <div class="card"><span class="card-icon">🏆</span><div class="card-title">High-Quality Software</div><div class="card-body">Ensure performance, reliability, and security throughout the product lifecycle.</div></div>
+      <div class="card"><span class="card-icon">🔧</span><div class="card-title">Ease of Maintenance</div><div class="card-body">Build software that is easy to correct, update, and scale over time.</div></div>
+    </div>
+
+    <div class="key-takeaway">
+      <div class="key-takeaway-label">Key Takeaway</div>
+      <p>Software Engineering applies structured methods, tools, and processes to build software that is reliable, efficient, on-budget, and meets real user needs — not just code, but programs + data + documentation.</p>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="showSection('overview')">← Back</button>
+      <button class="btn-nav primary" onclick="showSection('qualities')">Next: Software Qualities →</button>
+    </div>
+  </div>
+
+  <!-- QUALITIES -->
+  <div id="section-qualities" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+    <div class="section-tag">02 · ISO/IEC 25010</div>
+    <div class="reading-time">2 min read</div>
+    <h2>Qualities of Software</h2>
+    <p>Good software isn't just about working code. It must meet a broad set of quality criteria — and these criteria sometimes <em>conflict</em> with each other.</p>
+
+    <div class="quality-grid">
+      <div class="quality-card"><div class="quality-dot"></div><div><h4>Validity</h4><p>The software meets user needs and performs its intended functions.</p></div></div>
+      <div class="quality-card"><div class="quality-dot"></div><div><h4>Reliability</h4><p>Results are accurate and consistent — output is as expected.</p></div></div>
+      <div class="quality-card"><div class="quality-dot"></div><div><h4>Robustness</h4><p>Operates correctly even under abnormal conditions (bad input, failures).</p></div></div>
+      <div class="quality-card"><div class="quality-dot"></div><div><h4>Performance</h4><p>Fast response times and efficient use of system resources.</p></div></div>
+      <div class="quality-card"><div class="quality-dot"></div><div><h4>Maintainability</h4><p>Easy to correct, modify, or update when requirements change.</p></div></div>
+      <div class="quality-card"><div class="quality-dot"></div><div><h4>Extensibility</h4><p>New features can be added without redesigning the entire system.</p></div></div>
+      <div class="quality-card"><div class="quality-dot"></div><div><h4>Reusability</h4><p>Components can be reused, in whole or in part, in other applications.</p></div></div>
+      <div class="quality-card"><div class="quality-dot"></div><div><h4>Efficiency</h4><p>Reasonable consumption of memory, CPU, and other resources.</p></div></div>
+      <div class="quality-card"><div class="quality-dot"></div><div><h4>Portability</h4><p>Can run on different hardware or software environments with minimal effort.</p></div></div>
+      <div class="quality-card"><div class="quality-dot"></div><div><h4>Integrity</h4><p>Protects itself and its data against unauthorized access or modification.</p></div></div>
+      <div class="quality-card"><div class="quality-dot"></div><div><h4>User-Friendliness</h4><p>Easy to learn and use: clear UI, shortcuts, helpful error messages.</p></div></div>
+    </div>
+
+    <div class="def-box" style="border-left-color: var(--gold);">
+      <div class="def-label" style="color:var(--gold);">⚠️ Trade-offs exist!</div>
+      <p>These factors are sometimes contradictory. For example, high performance might require sacrificing portability. The right compromise depends on the application context — a video game prioritizes performance; a banking app prioritizes security and reliability.</p>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="showSection('definitions')">← Back</button>
+      <button class="btn-nav primary" onclick="showSection('environment')">Next: Environment & Actors →</button>
+    </div>
+  </div>
+
+  <!-- ENVIRONMENT & ACTORS -->
+  <div id="section-environment" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:37%"></div></div>
+    <div class="section-tag">03 · Context</div>
+    <h2>Environment & Actors</h2>
+    <p>Software doesn't exist in isolation — it interacts with its environment and involves multiple human actors.</p>
+
+    <div class="highlight-box">📌 <strong>Environment</strong> = All entities that may interact with the software without being part of its internal code.</div>
+
+    <div class="card-grid">
+      <div class="card"><span class="card-icon">👤</span><div class="card-title">Users</div><div class="card-body">General public (text editor), doctors (diagnostic systems), developers (IDE)…</div></div>
+      <div class="card"><span class="card-icon">💾</span><div class="card-title">Other Software</div><div class="card-body">Booking platforms, DBMS, operating systems, APIs and external services.</div></div>
+      <div class="card"><span class="card-icon">🖥️</span><div class="card-title">Hardware</div><div class="card-body">Sensors, drones, screens, autonomous cars, robots, RAM, CPU…</div></div>
+    </div>
+
+    <h3>Who is Involved?</h3>
+    <div class="actors-grid">
+      <div class="actor-card">
+        <div class="actor-avatar">🏦</div>
+        <div class="actor-info">
+          <h4>Customer (Owner)</h4>
+          <p>The person or organization that <strong>orders and finances</strong> the software. They define the requirements.</p>
+        </div>
+      </div>
+      <div class="actor-card">
+        <div class="actor-avatar">🙋</div>
+        <div class="actor-info">
+          <h4>User</h4>
+          <p>The person who <strong>actually uses</strong> the software. May be different from the customer (e.g., employees of a client company).</p>
+        </div>
+      </div>
+      <div class="actor-card">
+        <div class="actor-avatar">👨‍💻</div>
+        <div class="actor-info">
+          <h4>Developer</h4>
+          <p>The person or team responsible for <strong>designing and programming</strong> the software.</p>
+        </div>
+      </div>
+      <div class="actor-card">
+        <div class="actor-avatar">🏢</div>
+        <div class="actor-info">
+          <h4>Subcontractor</h4>
+          <p>An external company or person who performs <strong>part of the work</strong> under contract from the main developer.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="showSection('qualities')">← Back</button>
+      <button class="btn-nav primary" onclick="showSection('crisis')">Next: Software Crisis →</button>
+    </div>
+  </div>
+
+  <!-- CRISIS -->
+  <div id="section-crisis" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+    <div class="section-tag">04 · History</div>
+    <div class="reading-time">4 min read</div>
+    <h2>The Software Crisis</h2>
+    <p>Around 1970, researchers observed a troubling pattern: software projects were consistently failing. This led to the birth of Software Engineering as a formal discipline.</p>
+
+    <div class="two-col">
+      <div class="info-box">
+        <h4>⚠️ Symptoms (1970s)</h4>
+        <ul>
+          <li>Delivery deadlines not met</li>
+          <li>Budgets consistently exceeded</li>
+          <li>Failure to meet user/client needs</li>
+          <li>Difficult to use, maintain, and upgrade</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h4>🔍 Root Causes</h4>
+        <ul>
+          <li>Software size and complexity</li>
+          <li>Large, poorly coordinated teams</li>
+          <li>Lack of design/verification methods</li>
+          <li>Neglect of validation phases</li>
+          <li>Poor understanding of client needs</li>
+          <li>No client involvement during development</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box">🔑 Key Principle: A <strong>failure</strong> is always caused by a <strong>fault</strong> (in the specification, code, or communications). However, a fault doesn't always cause a visible failure.</div>
+
+    <h3>Famous Incidents</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="incident-card">
+          <div class="incident-badge">1962 · Space</div>
+          <h3>Mariner Probe Lost</h3>
+          <p>NASA's Mariner probe to Venus was lost in space due to a single bug in a FORTRAN guidance program — a missing hyphen in the code.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="incident-card">
+          <div class="incident-badge">1981 · NASA</div>
+          <h3>Space Shuttle Columbia Delayed</h3>
+          <p>The first launch was delayed by two days due to a synchronization bug between 5 computer systems, written in the HAL/S language designed by NASA.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="incident-card">
+          <div class="incident-badge">1996 · Europe</div>
+          <h3>Ariane 5 Explosion — $500 Million</h3>
+          <p>The Ariane 5 rocket exploded 36 seconds after takeoff, costing $500 million. Cause: an integer overflow — speed values exceeded the 16-bit data type used in the navigation software.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="incident-card">
+          <div class="incident-badge">2000 · Worldwide</div>
+          <h3>Y2K Bug — $600 Billion</h3>
+          <p>The Year 2000 bug caused a global panic. Systems stored years as 2 digits; "00" could be interpreted as 1900. Correction costs in the USA alone reached ~$600 billion (Gartner Group).</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Project Success Rates (Standish Group, 2013)</h3>
+    <div class="card-grid">
+      <div class="card" style="border-top:3px solid var(--green);"><span class="card-icon">✅</span><div class="card-title" style="color:var(--green)">Successful</div><div class="card-body">Completed on time, within budget, with all requested features. <strong>~39% of small projects</strong></div></div>
+      <div class="card" style="border-top:3px solid var(--gold);"><span class="card-icon">⚠️</span><div class="card-title" style="color:var(--gold)">Mixed</div><div class="card-body">Completed but delivered late, over budget, or missing features. <strong>~52% of large projects</strong></div></div>
+      <div class="card" style="border-top:3px solid var(--red);"><span class="card-icon">❌</span><div class="card-title" style="color:var(--red)">Failed</div><div class="card-body">Abandoned before completion or delivered but never used. <strong>~38% of large projects fail</strong></div></div>
+    </div>
+
+    <div class="key-takeaway">
+      <div class="key-takeaway-label">Key Takeaway</div>
+      <p>Software failures are caused by faults in requirements, design, or code — not just bad luck. Getting the requirements right (only 6% of effort, but 56% of errors!) is the single most impactful thing a team can do.</p>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="showSection('environment')">← Back</button>
+      <button class="btn-nav primary" onclick="showSection('process')">Next: Dev Process →</button>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div id="section-process" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:62%"></div></div>
+    <div class="section-tag">05 · SDLC</div>
+    <div class="reading-time">5 min read</div>
+    <h2>Software Development Process</h2>
+    <p>A structured process schedules a set of activities to produce software systematically.</p>
+
+    <h3>Core Activities</h3>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">1</div>
+        <div class="step-body"><h3>Analysis & Specification</h3><p>Capture requirements and clearly describe what the software must do. Produces the <em>Cahier de charges</em> (SRS — Software Requirements Specification).</p></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">2</div>
+        <div class="step-body"><h3>Design</h3><p>Elaborate a concrete solution: system architecture, modules, data structures, algorithms. Blueprint before building.</p></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">3</div>
+        <div class="step-body"><h3>Implementation</h3><p>Program the designed solution in a chosen programming language. Translates design into executable code.</p></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">4</div>
+        <div class="step-body"><h3>Verification & Validation</h3><p><strong>Verification (internal):</strong> Does the software meet its specification? <strong>Validation (external):</strong> Are the customers satisfied?</p></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">5</div>
+        <div class="step-body"><h3>Delivery</h3><p>Installation, deployment, and configuration of the software in the target environment.</p></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">6</div>
+        <div class="step-body"><h3>Maintenance</h3><p>Correction of bugs and evolution of features. Studies show maintenance consumes ~67% of total development effort!</p></div>
+      </div>
+    </div>
+
+    <div class="highlight-box">📊 <strong>Key Statistic (Zeltovitz & De Marco):</strong> Although requirements definition takes only 6% of development effort, it is the source of 56% of all errors and 82% of maintenance costs. Getting the requirements right is critical.</div>
+
+    <h3>Development Models</h3>
+    <div class="model-grid">
+      <div class="model-card">
+        <div class="model-header"><h3>🌊 Cascade (Waterfall)</h3></div>
+        <div class="model-body"><ul>
+          <li>Each phase must be fully completed before the next begins</li>
+          <li>Each step produces a document for the next</li>
+          <li>Errors often detected late (during testing or delivery)</li>
+          <li>Correction may require re-checking all phases</li>
+        </ul></div>
+      </div>
+      <div class="model-card">
+        <div class="model-header"><h3>✔️ V-Model</h3></div>
+        <div class="model-body"><ul>
+          <li>Each development phase has a corresponding testing phase</li>
+          <li>Enables early error detection</li>
+          <li>Suitable for medium-complexity projects requiring reliability</li>
+          <li>Tests are planned in parallel with development phases</li>
+        </ul></div>
+      </div>
+      <div class="model-card">
+        <div class="model-header"><h3>🌀 Spiral</h3></div>
+        <div class="model-body"><ul>
+          <li>Risk-driven iterative approach</li>
+          <li>4 phases per cycle: plan → identify risks → develop → review</li>
+          <li>Produces prototypes progressively</li>
+          <li>Good for large, complex, high-risk projects</li>
+        </ul></div>
+      </div>
+      <div class="model-card">
+        <div class="model-header"><h3>⚡ Agile (e.g., Scrum)</h3></div>
+        <div class="model-body"><ul>
+          <li>Short iterative development cycles (sprints)</li>
+          <li>Continuous client involvement and feedback</li>
+          <li>Flexible response to changing requirements</li>
+          <li>Working software delivered frequently</li>
+        </ul></div>
+      </div>
+    </div>
+
+
+    <div class="key-takeaway">
+      <div class="key-takeaway-label">Key Takeaway</div>
+      <p>No single model is perfect. Waterfall is rigid, V-Model adds testing, Spiral manages risk, and Agile embraces change. Choose based on project size, risk level, and how well you understand requirements upfront.</p>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="showSection('crisis')">← Back</button>
+      <button class="btn-nav primary" onclick="showSection('needs')">Next: Functional vs Non-Functional →</button>
+    </div>
+  </div>
+
+  <!-- NEEDS -->
+  <div id="section-needs" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+    <div class="section-tag">06 · Requirements</div>
+    <h2>Functional vs Non-Functional Needs</h2>
+    <p>Requirements in an SRS (Software Requirements Specification) are classified into two categories.</p>
+
+    <div class="two-col">
+      <div class="info-box">
+        <h4>⚙️ Functional Needs (WHAT)</h4>
+        <ul>
+          <li>What the system must <em>do</em></li>
+          <li>Actions, behaviors, and features</li>
+          <li>If missing, the user cannot complete a task</li>
+          <li>Example: "A patient can book an appointment online"</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h4>📊 Non-Functional Needs (HOW)</h4>
+        <ul>
+          <li>How the system should <em>behave</em></li>
+          <li>Performance, security, availability, constraints</li>
+          <li>Quality attributes and operational constraints</li>
+          <li>Example: "Medical data must be encrypted"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="classifier">
+      <h3>🎮 Interactive: Click each need to reveal if it's Functional (F) or Non-Functional (NF)</h3>
+      <div class="need-list" id="needList">
+        <div class="need-item" onclick="revealNeed(this, 'F')"><span>1. A patient can book an appointment via a website</span><span class="need-badge F">F</span></div>
+        <div class="need-item" onclick="revealNeed(this, 'NF')"><span>2. Stored medical data must be encrypted</span><span class="need-badge NF">NF</span></div>
+        <div class="need-item" onclick="revealNeed(this, 'F')"><span>3. The secretary creates a file for each new patient</span><span class="need-badge F">F</span></div>
+        <div class="need-item" onclick="revealNeed(this, 'NF')"><span>4. A patient can only have one electronic medical record</span><span class="need-badge NF">NF</span></div>
+        <div class="need-item" onclick="revealNeed(this, 'F')"><span>5. A doctor can view a patient's medical history</span><span class="need-badge F">F</span></div>
+        <div class="need-item" onclick="revealNeed(this, 'NF')"><span>6. The secretary has no access to medical data</span><span class="need-badge NF">NF</span></div>
+        <div class="need-item" onclick="revealNeed(this, 'NF')"><span>7. Consultation appointments are scheduled between 9am–2pm</span><span class="need-badge NF">NF</span></div>
+        <div class="need-item" onclick="revealNeed(this, 'F')"><span>8. The weekly schedule is set by the head physician</span><span class="need-badge F">F</span></div>
+        <div class="need-item" onclick="revealNeed(this, 'F')"><span>9. Files of deceased patients are archived for 10 years</span><span class="need-badge F">F</span></div>
+        <div class="need-item" onclick="revealNeed(this, 'F')"><span>10. Appointments are confirmed based on doctor availability</span><span class="need-badge F">F</span></div>
+      </div>
+      <button class="reveal-btn" onclick="revealAll()">Reveal All</button>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="showSection('process')">← Back</button>
+      <button class="btn-nav primary" onclick="showSection('quiz')">Next: Practice Quiz →</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="section-quiz" class="section">
+    <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    <div class="section-tag">✦ · Self-Assessment</div>
+    <h2>Practice Quiz</h2>
+    <p>Test your understanding of Chapter 1. Click an answer to see if you're correct.</p>
+    <div class="quiz-progress-text" id="quizProgressText">Question 0 / 6 answered</div>
+
+    <div class="quiz-question">
+      <div class="quiz-q">1. According to the standard definition, Software is composed of:</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this, false, 'Software is more than just programs — it also includes data and all associated documentation.')">Only executable programs</button>
+        <button class="quiz-option" onclick="answer(this, true, 'Correct! Software = Programs + Data + Documents (design docs, test reports, user manuals, etc.)')">Programs + Data + Documents</button>
+        <button class="quiz-option" onclick="answer(this, false, 'Source code is part of it, but software also includes data and documentation.')">Source code and binary files only</button>
+        <button class="quiz-option" onclick="answer(this, false, 'Hardware is not software — it\'s the physical environment.')">Programs and hardware</button>
+      </div>
+      <div class="quiz-feedback" id="qf0"></div>
+    </div>
+
+    <div class="quiz-question">
+      <div class="quiz-q">2. What was the cause of the Ariane 5 explosion in 1996?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this, false, 'It was a software issue, not a mechanical one.')">A mechanical fuel system failure</button>
+        <button class="quiz-option" onclick="answer(this, false, 'Y2K was a date-format bug. Ariane 5 had a numeric overflow issue.')">A Y2K-like date formatting bug</button>
+        <button class="quiz-option" onclick="answer(this, true, 'Correct! Speed values calculated during flight exceeded the 16-bit integer limit, causing an overflow that crashed the navigation system.')">An integer overflow (speed values exceeded 16-bit limit)</button>
+        <button class="quiz-option" onclick="answer(this, false, 'While communication errors happen, this was an arithmetic overflow bug.')">A communication error between ground control and the rocket</button>
+      </div>
+      <div class="quiz-feedback" id="qf1"></div>
+    </div>
+
+    <div class="quiz-question">
+      <div class="quiz-q">3. In the Waterfall model, what is a major disadvantage?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this, false, 'Waterfall actually uses clear documentation at every step.')">No documentation is produced</button>
+        <button class="quiz-option" onclick="answer(this, true, 'Correct! Errors are often discovered very late (during testing or delivery), making them very costly to fix since all phases must be revisited.')">Errors are often detected late during testing or delivery</button>
+        <button class="quiz-option" onclick="answer(this, false, 'Waterfall is sequential and structured, not fast or uncontrolled.')">Development is too fast and uncontrolled</button>
+        <button class="quiz-option" onclick="answer(this, false, 'Waterfall does involve the client — in the specification phase.')">The client is never involved at all</button>
+      </div>
+      <div class="quiz-feedback" id="qf2"></div>
+    </div>
+
+    <div class="quiz-question">
+      <div class="quiz-q">4. "The system response time must be under 2 seconds" is an example of:</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this, false, 'Functional needs describe what the system does (features/actions), not how fast it does it.')">A functional need</button>
+        <button class="quiz-option" onclick="answer(this, true, 'Correct! Performance constraints like response time are non-functional needs — they describe how the system should behave, not what it does.')">A non-functional need</button>
+        <button class="quiz-option" onclick="answer(this, false, 'This is a requirement, not a design decision.')">A design decision</button>
+        <button class="quiz-option" onclick="answer(this, false, 'This is clearly a testable, measurable requirement.')">An optional feature</button>
+      </div>
+      <div class="quiz-feedback" id="qf3"></div>
+    </div>
+
+    <div class="quiz-question">
+      <div class="quiz-q">5. Which software quality means the ability to run on different hardware or OS environments?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this, false, 'Reliability is about producing correct and consistent results.')">Reliability</button>
+        <button class="quiz-option" onclick="answer(this, false, 'Maintainability is about how easy the code is to change or fix.')">Maintainability</button>
+        <button class="quiz-option" onclick="answer(this, false, 'Reusability is about using components in new applications.')">Reusability</button>
+        <button class="quiz-option" onclick="answer(this, true, 'Correct! Portability is the ease with which software can be transferred to different hardware or software environments.')">Portability</button>
+      </div>
+      <div class="quiz-feedback" id="qf4"></div>
+    </div>
+
+    <div class="quiz-question">
+      <div class="quiz-q">6. According to Zeltovitz & De Marco, which phase is the source of the most errors and maintenance costs?</div>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(this, false, 'Coding accounts for only 7% of errors and 1% of maintenance costs.')">Implementation (Coding)</button>
+        <button class="quiz-option" onclick="answer(this, false, 'Testing helps find errors but is not the source of them.')">Testing</button>
+        <button class="quiz-option" onclick="answer(this, true, 'Correct! Requirements definition (needs analysis) accounts for 56% of all errors and 82% of maintenance costs, despite being only 6% of the development effort!')">Requirements Definition (Needs Analysis)</button>
+        <button class="quiz-option" onclick="answer(this, false, 'Design causes 27% of errors and 13% of maintenance costs — significant, but less than requirements.')">Design</button>
+      </div>
+      <div class="quiz-feedback" id="qf5"></div>
+    </div>
+
+    <div class="quiz-score-card" id="quizScoreCard">
+      <div class="quiz-score-stars" id="quizStars"></div>
+      <div class="quiz-score-num" id="quizScoreNum"></div>
+      <div class="quiz-score-label">Correct Answers</div>
+      <div class="quiz-score-msg" id="quizScoreMsg"></div>
+    </div>
+
+    <a class="next-chapter-cta" href="oop-uml-course.html">
+      <div class="cta-icon">→</div>
+      <div class="cta-content">
+        <div class="cta-label">Next Chapter</div>
+        <div class="cta-title">Object-Oriented Modeling</div>
+      </div>
+      <div class="cta-arrow">→</div>
+    </a>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" onclick="showSection('needs')">← Back</button>
+      <button class="btn-nav primary" onclick="showSection('overview')">Back to Start ↩</button>
+    </div>
+  </div>
+
+</main>
+
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  const sections = ['overview','definitions','qualities','environment','crisis','process','needs','quiz'];
+  const visited = new Set(JSON.parse(localStorage.getItem('se_visited') || '["overview"]'));
+
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.sidebar .nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('section-' + id).classList.add('active');
+    document.querySelectorAll('.sidebar .nav-item').forEach(n => {
+      if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) n.classList.add('active');
+    });
+    visited.add(id);
+    localStorage.setItem('se_visited', JSON.stringify([...visited]));
+    updateProgress();
+    updateCheckmarks();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.innerWidth <= 768) {
+      document.getElementById('sidebar').classList.remove('open');
+    }
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  function updateProgress() {
+    const count = visited.size;
+    const pct = Math.round((count / sections.length) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressText').textContent = count + ' / ' + sections.length + ' sections viewed';
+  }
+
+  function updateCheckmarks() {
+    document.querySelectorAll('.nav-item[data-section]').forEach(item => {
+      const sec = item.getAttribute('data-section');
+      if (visited.has(sec)) {
+        item.classList.add('visited');
+      }
+    });
+  }
+  updateProgress();
+  updateCheckmarks();
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    const current = sections.find(s => document.getElementById('section-' + s)?.classList.contains('active'));
+    const idx = sections.indexOf(current);
+    if (e.key === 'ArrowRight' && idx < sections.length - 1) showSection(sections[idx + 1]);
+    if (e.key === 'ArrowLeft' && idx > 0) showSection(sections[idx - 1]);
+  });
+
+  // Scroll-to-top & reading progress
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 300);
+    // Reading progress
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docH > 0 ? Math.min(100, (window.scrollY / docH) * 100) : 0;
+    document.getElementById('readingProgress').style.width = pct + '%';
+  });
+
+  // Quiz system with scoring
+  let answeredQuestions = {};
+  let quizCorrect = 0;
+  const quizTotal = 6;
+
+  function answer(btn, correct, feedback) {
+    const block = btn.closest('.quiz-question');
+    const idx = Array.from(document.querySelectorAll('.quiz-question')).indexOf(block);
+    if (answeredQuestions[idx]) return;
+    answeredQuestions[idx] = true;
+    if (correct) quizCorrect++;
+
+    const fb = document.getElementById('qf' + idx);
+    block.querySelectorAll('.quiz-option').forEach(b => b.style.pointerEvents = 'none');
+    btn.classList.add(correct ? 'correct' : 'wrong');
+    // Also highlight the correct answer
+    if (!correct) {
+      block.querySelectorAll('.quiz-option').forEach(b => {
+        if (b.getAttribute('onclick')?.includes('true')) b.classList.add('correct');
+      });
+    }
+    fb.textContent = (correct ? '✅ ' : '❌ ') + feedback;
+    fb.className = 'quiz-feedback show ' + (correct ? 'correct' : 'wrong');
+
+    // Update progress text
+    const answered = Object.keys(answeredQuestions).length;
+    document.getElementById('quizProgressText').textContent = 'Question ' + answered + ' / ' + quizTotal + ' answered';
+
+    // Check if all answered
+    if (answered === quizTotal) showQuizScore();
+  }
+
+  function showQuizScore() {
+    const card = document.getElementById('quizScoreCard');
+    card.classList.add('visible');
+    document.getElementById('quizScoreNum').textContent = quizCorrect + ' / ' + quizTotal;
+
+    // Stars
+    const starCount = Math.round((quizCorrect / quizTotal) * 5);
+    document.getElementById('quizStars').textContent = '★'.repeat(starCount) + '☆'.repeat(5 - starCount);
+
+    // Message
+    const msgs = [
+      'Keep studying — review the sections above!',
+      'Good start! A few more reviews will help.',
+      'Not bad! Review what you missed.',
+      'Well done! You understand the fundamentals.',
+      'Great job! Almost perfect!',
+      'Perfect score! You\'ve mastered Chapter 1! 🎉'
+    ];
+    document.getElementById('quizScoreMsg').textContent = msgs[quizCorrect];
+
+    // Confetti if score >= 4
+    if (quizCorrect >= 4) fireConfetti();
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Confetti effect
+  function fireConfetti() {
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const pieces = [];
+    const colors = ['#3ddc84','#5b8def','#f0b429','#e05f5f','#e8eaf0'];
+    for (let i = 0; i < 120; i++) {
+      pieces.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        w: Math.random() * 8 + 4,
+        h: Math.random() * 4 + 2,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        vx: (Math.random() - 0.5) * 4,
+        vy: Math.random() * 3 + 2,
+        rot: Math.random() * 360,
+        vrot: (Math.random() - 0.5) * 10,
+        opacity: 1
+      });
+    }
+    let frame = 0;
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vrot;
+        p.vy += 0.05;
+        if (frame > 80) p.opacity -= 0.015;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.globalAlpha = Math.max(0, p.opacity);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+      });
+      frame++;
+      if (frame < 160) requestAnimationFrame(animate);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    animate();
+  }
+
+  function revealNeed(el, type) {
+    el.querySelector('.need-badge').classList.add('show');
+    el.style.borderColor = type === 'F' ? 'var(--green)' : 'var(--blue)';
+  }
+
+  function revealAll() {
+    document.querySelectorAll('.need-item').forEach(el => {
+      const badge = el.querySelector('.need-badge');
+      badge.classList.add('show');
+      el.style.borderColor = badge.classList.contains('F') ? 'var(--green)' : 'var(--blue)';
+    });
+  }
+</script>
+</body>
+</html>
