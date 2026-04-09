@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R2BP7HLFSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R2BP7HLFSL');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GL1 – Introduction to Software Engineering</title>
@@ -36,14 +44,14 @@
 
   <div class="nav-section">
     <div class="nav-section-title">Chapter 1</div>
-    <a class="nav-item active" onclick="showSection('overview')" data-section="overview"><span class="nav-num">00</span>Overview<span class="check-icon">✓</span></a>
-    <a class="nav-item" onclick="showSection('definitions')" data-section="definitions"><span class="nav-num">01</span>Definitions<span class="check-icon">✓</span></a>
-    <a class="nav-item" onclick="showSection('qualities')" data-section="qualities"><span class="nav-num">02</span>Software Qualities<span class="check-icon">✓</span></a>
-    <a class="nav-item" onclick="showSection('environment')" data-section="environment"><span class="nav-num">03</span>Environment & Actors<span class="check-icon">✓</span></a>
-    <a class="nav-item" onclick="showSection('crisis')" data-section="crisis"><span class="nav-num">04</span>Software Crisis<span class="check-icon">✓</span></a>
-    <a class="nav-item" onclick="showSection('process')" data-section="process"><span class="nav-num">05</span>Dev Process<span class="check-icon">✓</span></a>
-    <a class="nav-item" onclick="showSection('needs')" data-section="needs"><span class="nav-num">06</span>Functional vs NF<span class="check-icon">✓</span></a>
-    <a class="nav-item" onclick="showSection('quiz')" data-section="quiz"><span class="nav-num">✦</span>Practice Quiz<span class="check-icon">✓</span></a>
+    <a class="nav-item active" onclick="showSection('overview')" data-section="overview"><span class="nav-num">00</span>Overview<span class="check-icon" onclick="toggleCheck(event, 'overview')">✓</span></a>
+    <a class="nav-item" onclick="showSection('definitions')" data-section="definitions"><span class="nav-num">01</span>Definitions<span class="check-icon" onclick="toggleCheck(event, 'definitions')">✓</span></a>
+    <a class="nav-item" onclick="showSection('qualities')" data-section="qualities"><span class="nav-num">02</span>Software Qualities<span class="check-icon" onclick="toggleCheck(event, 'qualities')">✓</span></a>
+    <a class="nav-item" onclick="showSection('environment')" data-section="environment"><span class="nav-num">03</span>Environment & Actors<span class="check-icon" onclick="toggleCheck(event, 'environment')">✓</span></a>
+    <a class="nav-item" onclick="showSection('crisis')" data-section="crisis"><span class="nav-num">04</span>Software Crisis<span class="check-icon" onclick="toggleCheck(event, 'crisis')">✓</span></a>
+    <a class="nav-item" onclick="showSection('process')" data-section="process"><span class="nav-num">05</span>Dev Process<span class="check-icon" onclick="toggleCheck(event, 'process')">✓</span></a>
+    <a class="nav-item" onclick="showSection('needs')" data-section="needs"><span class="nav-num">06</span>Functional vs NF<span class="check-icon" onclick="toggleCheck(event, 'needs')">✓</span></a>
+    <a class="nav-item" onclick="showSection('quiz')" data-section="quiz"><span class="nav-num">✦</span>Practice Quiz<span class="check-icon" onclick="toggleCheck(event, 'quiz')">✓</span></a>
   </div>
 
   <div class="nav-section" style="margin-top:auto; padding-top:16px;">
@@ -63,18 +71,18 @@
     <h1>Introduction to<br><em>Software Engineering</em></h1>
     <p>Learn the foundations of Software Engineering (Génie Logiciel): what software is, why it's hard to build well, and how structured processes help teams deliver quality software.</p>
 
-    <div style="display:flex; gap:32px; margin-top:40px;">
-      <div style="text-align:center;">
-        <div style="font-family:'Playfair Display',serif; font-size:32px; font-weight:900; color:var(--green);">8</div>
-        <div style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase;">Topics</div>
+    <div class="hero-stats">
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">8</div>
+        <div class="hero-stat-label">Topics</div>
       </div>
-      <div style="text-align:center;">
-        <div style="font-family:'Playfair Display',serif; font-size:32px; font-weight:900; color:var(--green);">4</div>
-        <div style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase;">Dev Models</div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">4</div>
+        <div class="hero-stat-label">Dev Models</div>
       </div>
-      <div style="text-align:center;">
-        <div style="font-family:'Playfair Display',serif; font-size:32px; font-weight:900; color:var(--green);">11</div>
-        <div style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase;">Quality Factors</div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">11</div>
+        <div class="hero-stat-label">Quality Factors</div>
       </div>
     </div>
 
@@ -612,11 +620,25 @@
     document.getElementById('progressText').textContent = count + ' / ' + sections.length + ' sections viewed';
   }
 
+  function toggleCheck(event, id) {
+    event.stopPropagation();
+    if (visited.has(id)) {
+      visited.delete(id);
+    } else {
+      visited.add(id);
+    }
+    localStorage.setItem('se_visited', JSON.stringify([...visited]));
+    updateCheckmarks();
+    updateProgress();
+  }
+
   function updateCheckmarks() {
     document.querySelectorAll('.nav-item[data-section]').forEach(item => {
       const sec = item.getAttribute('data-section');
       if (visited.has(sec)) {
         item.classList.add('visited');
+      } else {
+        item.classList.remove('visited');
       }
     });
   }

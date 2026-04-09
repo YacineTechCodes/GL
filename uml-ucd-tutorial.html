@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R2BP7HLFSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R2BP7HLFSL');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UML Use Case Diagrams — Interactive Tutorial</title>
@@ -10,7 +18,7 @@
   body { padding-top: 52px; }
 
   /* Section reveal animation */
-  .section {
+  .section:not(.hero) {
     display: block;
     padding: 0;
     max-width: none;
@@ -55,6 +63,7 @@
 <button class="hamburger" onclick="toggleSidebar()">☰</button>
 
 <div class="reading-progress" style="top:52px"><div class="reading-progress-fill" id="readingProgress"></div></div>
+<canvas id="confetti-canvas"></canvas>
 
 <nav class="sidebar" id="sidebar">
   <div class="logo">
@@ -64,40 +73,78 @@
 
   <div class="nav-section">
     <div class="nav-section-title">Introduction</div>
-    <a class="nav-item active" onclick="document.getElementById('s1').scrollIntoView({behavior:'smooth'})"><span class="nav-num">01</span>What is a UCD?</a>
+    <a class="nav-item active" onclick="document.getElementById('s1').scrollIntoView({behavior:'smooth'})" data-section="s1"><span class="nav-num">01</span>What is a UCD?<span class="check-icon" onclick="toggleCheck(event, 's1')">✓</span></a>
   </div>
 
   <div class="nav-section">
     <div class="nav-section-title">Elements</div>
-    <a class="nav-item" onclick="document.getElementById('s2').scrollIntoView({behavior:'smooth'})"><span class="nav-num">02</span>Actors</a>
-    <a class="nav-item" onclick="document.getElementById('s3').scrollIntoView({behavior:'smooth'})"><span class="nav-num">03</span>Use Cases</a>
-    <a class="nav-item" onclick="document.getElementById('s4').scrollIntoView({behavior:'smooth'})"><span class="nav-num">04</span>Relations</a>
+    <a class="nav-item" onclick="document.getElementById('s2').scrollIntoView({behavior:'smooth'})" data-section="s2"><span class="nav-num">02</span>Actors<span class="check-icon" onclick="toggleCheck(event, 's2')">✓</span></a>
+    <a class="nav-item" onclick="document.getElementById('s3').scrollIntoView({behavior:'smooth'})" data-section="s3"><span class="nav-num">03</span>Use Cases<span class="check-icon" onclick="toggleCheck(event, 's3')">✓</span></a>
+    <a class="nav-item" onclick="document.getElementById('s4').scrollIntoView({behavior:'smooth'})" data-section="s4"><span class="nav-num">04</span>Relations<span class="check-icon" onclick="toggleCheck(event, 's4')">✓</span></a>
   </div>
 
   <div class="nav-section">
     <div class="nav-section-title">Methodology</div>
-    <a class="nav-item" onclick="document.getElementById('s5').scrollIntoView({behavior:'smooth'})"><span class="nav-num">05</span>How to Build</a>
-    <a class="nav-item" onclick="document.getElementById('s6').scrollIntoView({behavior:'smooth'})"><span class="nav-num">06</span>Full Example</a>
+    <a class="nav-item" onclick="document.getElementById('s5').scrollIntoView({behavior:'smooth'})" data-section="s5"><span class="nav-num">05</span>How to Build<span class="check-icon" onclick="toggleCheck(event, 's5')">✓</span></a>
+    <a class="nav-item" onclick="document.getElementById('s6').scrollIntoView({behavior:'smooth'})" data-section="s6"><span class="nav-num">06</span>Full Example<span class="check-icon" onclick="toggleCheck(event, 's6')">✓</span></a>
   </div>
 
   <div class="nav-section">
     <div class="nav-section-title">Test</div>
-    <a class="nav-item" onclick="document.getElementById('s7').scrollIntoView({behavior:'smooth'})"><span class="nav-num">✦</span>Knowledge Check</a>
+    <a class="nav-item" onclick="document.getElementById('s7').scrollIntoView({behavior:'smooth'})" data-section="s7"><span class="nav-num">✦</span>Knowledge Check<span class="check-icon" onclick="toggleCheck(event, 's7')">✓</span></a>
+  </div>
+
+  <div class="nav-section" style="margin-top:auto; padding-top:16px;">
+    <div class="nav-section-title">Progress</div>
+    <div id="progressLabel" style="color:var(--muted); font-size:12px; padding:0 8px; margin-bottom:6px;">0% complete</div>
+    <div style="padding:0 8px;">
+      <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+    </div>
   </div>
 </nav>
 
 <main class="main">
 
 <!-- HERO -->
-<div class="hero" style="min-height:auto; padding:80px 40px 60px; text-align:center; align-items:center;">
-  <div style="font-family:'DM Mono',monospace; font-size:11px; color:var(--green); border:1px solid var(--green); padding:4px 14px; border-radius:4px; letter-spacing:3px; text-transform:uppercase; margin-bottom:24px; display:inline-block;">Chapter 3 · UML Diagrams</div>
-  <h1 style="text-align:center;">Use Case<br><em>Diagrams</em></h1>
-  <p style="margin:0 auto 32px; text-align:center;">Learn how to model software functionality from a user's perspective — the functional axis of UML.</p>
-  <div class="progress-bar-wrap" style="max-width:400px; margin:0 auto;">
-    <div class="progress-bar-fill" id="progressBar"></div>
+  <div id="section-overview" class="section active hero">
+    <div class="hero-tag">Software Engineering · Chapter 3</div>
+    <h1>Use Case<br><em>Diagrams</em></h1>
+    <p>Learn how to model software functionality from a user's perspective — understanding actors, boundaries, and the functional axis of UML.</p>
+
+    <div class="hero-stats">
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">6</div>
+        <div class="hero-stat-label">Sections</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">3</div>
+        <div class="hero-stat-label">Actor Types</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">2</div>
+        <div class="hero-stat-label">Relations</div>
+      </div>
+    </div>
+
+    <div class="toc-grid">
+      <div class="toc-card" onclick="document.getElementById('s2').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-card-num">01 — 03</div>
+        <div class="toc-card-title">Actors & Use Cases</div>
+      </div>
+      <div class="toc-card" onclick="document.getElementById('s4').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-card-num">04</div>
+        <div class="toc-card-title">UCD Relations</div>
+      </div>
+      <div class="toc-card" onclick="document.getElementById('s5').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-card-num">05 — 06</div>
+        <div class="toc-card-title">Methodology & Example</div>
+      </div>
+      <div class="toc-card" onclick="document.getElementById('s7').scrollIntoView({behavior:'smooth'})">
+        <div class="toc-card-num">✦</div>
+        <div class="toc-card-title">Knowledge Check</div>
+      </div>
+    </div>
   </div>
-  <div class="progress-label" id="progressLabel" style="text-align:center;">0% complete</div>
-</div>
 
 <!-- SCROLLSPY -->
 <div class="scrollspy" id="scrollspy"></div>
@@ -684,6 +731,7 @@
     </div>
 
     <p>Test your understanding with these quick questions:</p>
+    <div class="quiz-progress-text" id="quizProgressText">Question 0 / 5 answered</div>
 
     <!-- Q1 -->
     <div class="quiz-wrap" id="q1">
@@ -745,6 +793,22 @@
       <div class="quiz-feedback" id="q5-fb"></div>
     </div>
 
+    <div class="quiz-score-card" id="quizScoreCard">
+      <div class="quiz-score-stars" id="quizStars"></div>
+      <div class="quiz-score-num" id="quizScoreNum"></div>
+      <div class="quiz-score-label">Correct Answers</div>
+      <div class="quiz-score-msg" id="quizScoreMsg"></div>
+    </div>
+
+    <a class="next-chapter-cta" href="index.html">
+      <div class="cta-icon">←</div>
+      <div class="cta-content">
+        <div class="cta-label">All Courses</div>
+        <div class="cta-title">Back to Course Hub</div>
+      </div>
+      <div class="cta-arrow">→</div>
+    </a>
+
   </div>
 
 </div><!-- end layout -->
@@ -767,33 +831,104 @@ function showTab(id) {
 }
 
 // Quiz
-const feedback = {
-  q1: { t: "✓ Correct! UCDs show WHAT the system does, from the user's perspective — not the internal implementation.", f: "✗ Not quite. UCDs describe system functionality from the user's point of view, not technical internals." },
-  q2: { t: "✓ Correct! «include» means the included use case is always, unconditionally executed.", f: "✗ Not quite. «include» = mandatory/always. «extend» = optional/conditional." },
-  q3: { t: "✓ Correct! A cash replenisher performs a maintenance task and is not a direct beneficiary — that's a secondary actor.", f: "✗ Not quite. Primary actors use main functions. A replenisher does maintenance — that makes them secondary." },
-  q4: { t: "✓ Correct! Use case names should be infinitive verb phrases that describe the user's goal.", f: "✗ Not quite. Use cases are named with infinitive verb phrases (e.g., 'Place Order', 'Cancel Booking')." },
-  q5: { t: "✓ Correct! The base use case is complete on its own. The extension only kicks in under certain conditions.", f: "✗ Not quite. In «extend», the base case is self-sufficient. The extension is conditional/optional." }
+const feedbackData = {
+  q1: { t: "✅ Correct! UCDs show WHAT the system does, from the user's perspective — not the internal implementation.", f: "❌ Not quite. UCDs describe system functionality from the user's point of view, not technical internals." },
+  q2: { t: "✅ Correct! «include» means the included use case is always, unconditionally executed.", f: "❌ Not quite. «include» = mandatory/always. «extend» = optional/conditional." },
+  q3: { t: "✅ Correct! A cash replenisher performs a maintenance task and is not a direct beneficiary — that's a secondary actor.", f: "❌ Not quite. Primary actors use main functions. A replenisher does maintenance — that makes them secondary." },
+  q4: { t: "✅ Correct! Use case names should be infinitive verb phrases that describe the user's goal.", f: "❌ Not quite. Use cases are named with infinitive verb phrases (e.g., 'Place Order', 'Cancel Booking')." },
+  q5: { t: "✅ Correct! The base use case is complete on its own. The extension only kicks in under certain conditions.", f: "❌ Not quite. In «extend», the base case is self-sufficient. The extension is conditional/optional." }
 };
 
-let answered = {};
+let answeredQuiz = {};
+let quizCorrect = 0;
+const quizTotal = 5;
+
 function answer(btn, qid, correct) {
-  if (answered[qid]) return;
-  answered[qid] = true;
+  if (answeredQuiz[qid]) return;
+  answeredQuiz[qid] = true;
+  if (correct) quizCorrect++;
+
+  const block = btn.closest('.quiz-wrap');
+  block.querySelectorAll('.quiz-option').forEach(b => b.style.pointerEvents = 'none');
   btn.classList.add(correct ? 'correct' : 'wrong');
+  // Highlight correct answer if user got it wrong
+  if (!correct) {
+    block.querySelectorAll('.quiz-option').forEach(b => {
+      if (b.getAttribute('onclick')?.includes('true')) b.classList.add('correct');
+    });
+  }
   const fb = document.getElementById(qid + '-fb');
-  fb.textContent = correct ? feedback[qid].t : feedback[qid].f;
+  fb.textContent = correct ? feedbackData[qid].t : feedbackData[qid].f;
   fb.className = 'quiz-feedback show ' + (correct ? 'correct' : 'wrong');
+
+  // Update progress text
+  const count = Object.keys(answeredQuiz).length;
+  document.getElementById('quizProgressText').textContent = 'Question ' + count + ' / ' + quizTotal + ' answered';
+
+  if (count === quizTotal) showQuizScore();
   updateProgress();
+}
+
+function showQuizScore() {
+  const card = document.getElementById('quizScoreCard');
+  card.classList.add('visible');
+  document.getElementById('quizScoreNum').textContent = quizCorrect + ' / ' + quizTotal;
+  const starCount = Math.round((quizCorrect / quizTotal) * 5);
+  document.getElementById('quizStars').textContent = '★'.repeat(starCount) + '☆'.repeat(5 - starCount);
+  const msgs = [
+    'Keep studying — review the sections above!',
+    'Good start! A few more reviews will help.',
+    'Not bad! Review what you missed.',
+    'Well done! You understand Use Case Diagrams.',
+    'Great job! Almost perfect!',
+    'Perfect score! You\'ve mastered Use Case Diagrams! 🎉'
+  ];
+  document.getElementById('quizScoreMsg').textContent = msgs[quizCorrect];
+  if (quizCorrect >= 4) fireConfetti();
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// Confetti effect
+function fireConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const pieces = [];
+  const colors = ['#3ddc84','#5b8def','#f0b429','#e05f5f','#e8eaf0'];
+  for (let i = 0; i < 120; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: Math.random() * 8 + 4,
+      h: Math.random() * 4 + 2,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 4,
+      vy: Math.random() * 3 + 2,
+      rot: Math.random() * 360,
+      vrot: (Math.random() - 0.5) * 10,
+      opacity: 1
+    });
+  }
+  let frame = 0;
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.rot += p.vrot; p.vy += 0.05;
+      if (frame > 80) p.opacity -= 0.015;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot * Math.PI / 180);
+      ctx.globalAlpha = Math.max(0, p.opacity); ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h); ctx.restore();
+    });
+    frame++;
+    if (frame < 160) requestAnimationFrame(animate);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  animate();
 }
 
 // Progress
 const sections = ['s1','s2','s3','s4','s5','s6','s7'];
-function updateProgress() {
-  const visible = document.querySelectorAll('.section.visible').length;
-  const pct = Math.round((visible / sections.length) * 100);
-  document.getElementById('progressBar').style.width = pct + '%';
-  document.getElementById('progressLabel').textContent = pct + '% complete';
-}
 
 // Intersection observer for reveal
 const observer = new IntersectionObserver((entries) => {
@@ -819,6 +954,38 @@ sections.forEach((id, i) => {
   spy.appendChild(btn);
 });
 
+const visited = new Set(JSON.parse(localStorage.getItem('ucd_visited') || '["s1"]'));
+
+function toggleCheck(event, id) {
+  event.stopPropagation();
+  if (visited.has(id)) {
+    visited.delete(id);
+  } else {
+    visited.add(id);
+  }
+  localStorage.setItem('ucd_visited', JSON.stringify([...visited]));
+  updateCheckmarks();
+  updateProgress();
+}
+
+function updateCheckmarks() {
+  document.querySelectorAll('.nav-item[data-section]').forEach(item => {
+    const sec = item.getAttribute('data-section');
+    if (visited.has(sec)) {
+      item.classList.add('visited');
+    } else {
+      item.classList.remove('visited');
+    }
+  });
+}
+
+function updateProgress() {
+  const count = visited.size;
+  const pct = Math.round((count / sections.length) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = pct + '% complete';
+}
+
 function updateScrollspy() {
   const dots = spy.querySelectorAll('.spy-dot');
   const navItems = document.querySelectorAll('.sidebar .nav-item');
@@ -829,7 +996,13 @@ function updateScrollspy() {
       if (dots[i]) dots[i].classList.add('active');
       if (navItems[i]) {
         navItems[i].classList.add('active');
-        navItems[i].classList.add('visited');
+        // Auto-visit logic when scrolling past
+        if (!visited.has(id)) {
+          visited.add(id);
+          localStorage.setItem('ucd_visited', JSON.stringify([...visited]));
+          updateCheckmarks();
+          updateProgress();
+        }
       }
     } else {
       if (dots[i]) dots[i].classList.remove('active');
@@ -844,6 +1017,11 @@ window.addEventListener('scroll', () => {
   const pct = docH > 0 ? Math.min(100, (window.scrollY / docH) * 100) : 0;
   document.getElementById('readingProgress').style.width = pct + '%';
 });
+
+// Initialize
+updateCheckmarks();
+updateProgress();
 </script>
 </body>
 </html>
+

@@ -234,7 +234,8 @@ body {
 }
 
 .nav-item {
-  display: block;
+  display: flex;
+  align-items: center;
   padding: 9px 12px;
   border-radius: 8px;
   font-size: 13px;
@@ -276,14 +277,6 @@ body {
   display: none;
   padding: 60px 80px;
   max-width: 860px;
-  animation: fadeIn 0.4s ease;
-}
-
-.section.active { display: block; }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================================
@@ -291,13 +284,18 @@ body {
    ============================================================ */
 .hero {
   min-height: 100vh;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   padding: 80px;
   background: radial-gradient(ellipse at 20% 50%, rgba(26,40,64,0.7) 0%, transparent 60%),
               radial-gradient(ellipse at 80% 20%, rgba(26,48,32,0.5) 0%, transparent 50%),
               radial-gradient(circle at 50% 80%, rgba(91,141,239,0.04) 0%, transparent 40%);
+}
+
+.hero.active {
+  display: flex !important;
+  animation: fadeIn 0.45s cubic-bezier(0.23,1,0.32,1);
 }
 
 .hero-tag {
@@ -310,6 +308,31 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  margin-top: 40px;
+}
+.hero-stats.center {
+  justify-content: center;
+}
+.hero-stat-item {
+  text-align: center;
+}
+.hero-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--green);
+}
+.hero-stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .hero-tag::before {
@@ -1553,19 +1576,28 @@ ul li { font-size: 14px; color: var(--muted); }
    ============================================================ */
 .nav-item .check-icon {
   margin-left: auto;
-  font-size: 12px;
-  opacity: 0;
-  transform: scale(0);
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  color: var(--green);
-}
-.nav-item.visited .check-icon {
-  opacity: 1;
-  transform: scale(1);
-}
-.nav-item {
+  font-size: 11px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--muted);
   display: flex;
   align-items: center;
+  justify-content: center;
+  color: transparent; /* hidden by default */
+  transition: all 0.2s cubic-bezier(0.23,1,0.32,1);
+  opacity: 0.6;
+}
+.nav-item .check-icon:hover {
+  opacity: 1;
+  border-color: var(--text);
+  transform: scale(1.1);
+}
+.nav-item.visited .check-icon {
+  background: var(--green);
+  border-color: var(--green);
+  color: #0d1a14;
+  opacity: 1;
 }
 
 /* ============================================================

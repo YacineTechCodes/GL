@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R2BP7HLFSL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R2BP7HLFSL');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Object-Oriented Modeling — Interactive Course</title>
@@ -35,34 +43,42 @@
 
   <div class="nav-section">
     <div class="nav-section-title">Introduction</div>
-    <a class="nav-item active" onclick="show('home')" data-section="home"><span class="nav-num">00</span>Overview<span class="check-icon">✓</span></a>
+    <a class="nav-item active" onclick="show('home')" data-section="home"><span class="nav-num">00</span>Overview<span class="check-icon" onclick="toggleCheck(event, 'home')">✓</span></a>
   </div>
 
   <div class="nav-section">
     <div class="nav-section-title">Foundations</div>
-    <a class="nav-item" onclick="show('modeling')" data-section="modeling"><span class="nav-num">01</span>What is Modeling?<span class="check-icon">✓</span></a>
-    <a class="nav-item" onclick="show('languages')" data-section="languages"><span class="nav-num">02</span>Modeling Languages<span class="check-icon">✓</span></a>
-    <a class="nav-item" onclick="show('functional')" data-section="functional"><span class="nav-num">03</span>Functional Decomposition<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="show('modeling')" data-section="modeling"><span class="nav-num">01</span>What is Modeling?<span class="check-icon" onclick="toggleCheck(event, 'modeling')">✓</span></a>
+    <a class="nav-item" onclick="show('languages')" data-section="languages"><span class="nav-num">02</span>Modeling Languages<span class="check-icon" onclick="toggleCheck(event, 'languages')">✓</span></a>
+    <a class="nav-item" onclick="show('functional')" data-section="functional"><span class="nav-num">03</span>Functional Decomposition<span class="check-icon" onclick="toggleCheck(event, 'functional')">✓</span></a>
   </div>
 
   <div class="nav-section">
     <div class="nav-section-title">OOP Concepts</div>
-    <a class="nav-item" onclick="show('oo')" data-section="oo"><span class="nav-num">04</span>OO Paradigm<span class="check-icon">✓</span></a>
-    <a class="nav-item" onclick="show('principles')" data-section="principles"><span class="nav-num">05</span>Core Principles<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="show('oo')" data-section="oo"><span class="nav-num">04</span>OO Paradigm<span class="check-icon" onclick="toggleCheck(event, 'oo')">✓</span></a>
+    <a class="nav-item" onclick="show('principles')" data-section="principles"><span class="nav-num">05</span>Core Principles<span class="check-icon" onclick="toggleCheck(event, 'principles')">✓</span></a>
   </div>
 
   <div class="nav-section">
     <div class="nav-section-title">UML</div>
-    <a class="nav-item" onclick="show('uml')" data-section="uml"><span class="nav-num">06</span>Intro to UML<span class="check-icon">✓</span></a>
-    <a class="nav-item" onclick="show('diagrams')" data-section="diagrams"><span class="nav-num">07</span>UML Diagrams<span class="check-icon">✓</span></a>
-    <a class="nav-item" onclick="show('usage')" data-section="usage"><span class="nav-num">08</span>Using UML<span class="check-icon">✓</span></a>
-    <a class="nav-item" onclick="show('sysml')" data-section="sysml"><span class="nav-num">09</span>SysML vs UML<span class="check-icon">✓</span></a>
-    <a class="nav-item" onclick="show('up')" data-section="up"><span class="nav-num">10</span>UML vs UP<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="show('uml')" data-section="uml"><span class="nav-num">06</span>Intro to UML<span class="check-icon" onclick="toggleCheck(event, 'uml')">✓</span></a>
+    <a class="nav-item" onclick="show('diagrams')" data-section="diagrams"><span class="nav-num">07</span>UML Diagrams<span class="check-icon" onclick="toggleCheck(event, 'diagrams')">✓</span></a>
+    <a class="nav-item" onclick="show('usage')" data-section="usage"><span class="nav-num">08</span>Using UML<span class="check-icon" onclick="toggleCheck(event, 'usage')">✓</span></a>
+    <a class="nav-item" onclick="show('sysml')" data-section="sysml"><span class="nav-num">09</span>SysML vs UML<span class="check-icon" onclick="toggleCheck(event, 'sysml')">✓</span></a>
+    <a class="nav-item" onclick="show('up')" data-section="up"><span class="nav-num">10</span>UML vs UP<span class="check-icon" onclick="toggleCheck(event, 'up')">✓</span></a>
   </div>
 
   <div class="nav-section">
     <div class="nav-section-title">Test</div>
-    <a class="nav-item" onclick="show('quiz')" data-section="quiz"><span class="nav-num">✦</span>Quick Quiz<span class="check-icon">✓</span></a>
+    <a class="nav-item" onclick="show('quiz')" data-section="quiz"><span class="nav-num">✦</span>Quick Quiz<span class="check-icon" onclick="toggleCheck(event, 'quiz')">✓</span></a>
+  </div>
+
+  <div class="nav-section" style="margin-top:auto; padding-top:16px;">
+    <div class="nav-section-title">Progress</div>
+    <div id="progressText" style="color:var(--muted); font-size:12px; padding:0 8px; margin-bottom:6px;">0 / 12 sections viewed</div>
+    <div style="padding:0 8px;">
+      <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+    </div>
   </div>
 </nav>
 
@@ -74,7 +90,20 @@
     <h1>Object-Oriented<br><em>Modeling</em></h1>
     <p>Master the art of representing software systems using the OO paradigm and the UML standard — the language every software engineer speaks.</p>
     <button class="btn-start" onclick="show('modeling')">Start Learning →</button>
-
+    <div class="hero-stats">
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">10</div>
+        <div class="hero-stat-label">Topics</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">4</div>
+        <div class="hero-stat-label">Core Principles</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">14</div>
+        <div class="hero-stat-label">UML Diagrams</div>
+      </div>
+    </div>
     <div class="toc-grid">
       <div class="toc-card" onclick="show('modeling')">
         <div class="toc-card-num">01 — 03</div>
@@ -777,6 +806,7 @@ animals.forEach(a => a.speak())
     <div class="section-tag">✦ · Review</div>
     <h2>Quick Quiz</h2>
     <p>Test your understanding of Object-Oriented Modeling and UML. Click an answer to check it.</p>
+    <div class="quiz-progress-text" id="quizProgressText">Question 0 / 5 answered</div>
 
     <div class="quiz-question" id="q1">
       <div class="quiz-q">1. What are the three aspects of an Object in OOP?</div>
@@ -833,10 +863,21 @@ animals.forEach(a => a.speak())
       <div class="quiz-feedback" id="fb-q5"></div>
     </div>
 
-    <div id="quiz-score" style="display:none; background:var(--surface2); border:1px solid var(--green); border-radius:12px; padding:24px; margin-top:24px; text-align:center;">
-      <div style="font-family:'Playfair Display',serif; font-size:28px; color:var(--green); margin-bottom:8px;" id="score-num"></div>
-      <div style="color:var(--muted); font-size:14px;" id="score-msg"></div>
+    <div class="quiz-score-card" id="quiz-score">
+      <div class="quiz-score-stars" id="quiz-stars"></div>
+      <div class="quiz-score-num" id="score-num"></div>
+      <div class="quiz-score-label">Correct Answers</div>
+      <div class="quiz-score-msg" id="score-msg"></div>
     </div>
+
+    <a class="next-chapter-cta" href="uml-ucd-tutorial.html">
+      <div class="cta-icon">→</div>
+      <div class="cta-content">
+        <div class="cta-label">Next Chapter</div>
+        <div class="cta-title">Use Case Diagrams</div>
+      </div>
+      <div class="cta-arrow">→</div>
+    </a>
 
     <div class="nav-buttons">
       <button class="btn-nav" onclick="show('up')">← Review Last Section</button>
@@ -864,6 +905,7 @@ animals.forEach(a => a.speak())
     visited.add(id);
     localStorage.setItem('oop_visited', JSON.stringify([...visited]));
     updateCheckmarks();
+    updateProgress();
     window.scrollTo(0,0);
     if (window.innerWidth <= 768) {
       document.getElementById('sidebar').classList.remove('open');
@@ -874,14 +916,36 @@ animals.forEach(a => a.speak())
     document.getElementById('sidebar').classList.toggle('open');
   }
 
+  function toggleCheck(event, id) {
+    event.stopPropagation();
+    if (visited.has(id)) {
+      visited.delete(id);
+    } else {
+      visited.add(id);
+    }
+    localStorage.setItem('oop_visited', JSON.stringify([...visited]));
+    updateCheckmarks();
+    updateProgress();
+  }
+
   function updateCheckmarks() {
     document.querySelectorAll('.nav-item[data-section]').forEach(item => {
       if (visited.has(item.getAttribute('data-section'))) {
         item.classList.add('visited');
+      } else {
+        item.classList.remove('visited');
       }
     });
   }
+
+  function updateProgress() {
+    const count = visited.size;
+    const pct = Math.round((count / sections.length) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressText').textContent = count + ' / ' + sections.length + ' sections viewed';
+  }
   updateCheckmarks();
+  updateProgress();
 
   // Keyboard navigation
   document.addEventListener('keydown', e => {
@@ -901,11 +965,11 @@ animals.forEach(a => a.speak())
   });
 
   const feedbacks = {
-    q1: { correct: "✓ Correct! Every object has a unique identity, a state (its data/attributes), and behavior (its methods).", wrong: "✗ Not quite. In OOP, an object is defined by its Identity, State, and Behavior." },
-    q2: { correct: "✓ Correct! UML 2.5 expanded from 9 diagrams (UML 1.0) to 14 diagram types.", wrong: "✗ Not quite. UML 1.0 had 9 diagrams. UML 2.5 has 14 diagram types." },
-    q3: { correct: "✓ Correct! Encapsulation bundles data + methods and hides internal details behind a public interface.", wrong: "✗ Not quite. Encapsulation is the principle of hiding internal details and bundling data with methods." },
-    q4: { correct: "✓ Correct! UML is a language (notation), not a methodology. It doesn't tell you how to run a project — UP does.", wrong: "✗ Not quite. UML is a visual modeling language, not a programming language or methodology." },
-    q5: { correct: "✓ Correct! The Transition phase covers deployment, testing in production, bug fixes, and user training.", wrong: "✗ Not quite. The Transition phase is when the software is deployed to actual users and refined." }
+    q1: { correct: "✅ Correct! Every object has a unique identity, a state (its data/attributes), and behavior (its methods).", wrong: "❌ Not quite. In OOP, an object is defined by its Identity, State, and Behavior." },
+    q2: { correct: "✅ Correct! UML 2.5 expanded from 9 diagrams (UML 1.0) to 14 diagram types.", wrong: "❌ Not quite. UML 1.0 had 9 diagrams. UML 2.5 has 14 diagram types." },
+    q3: { correct: "✅ Correct! Encapsulation bundles data + methods and hides internal details behind a public interface.", wrong: "❌ Not quite. Encapsulation is the principle of hiding internal details and bundling data with methods." },
+    q4: { correct: "✅ Correct! UML is a language (notation), not a methodology. It doesn't tell you how to run a project — UP does.", wrong: "❌ Not quite. UML is a visual modeling language, not a programming language or methodology." },
+    q5: { correct: "✅ Correct! The Transition phase covers deployment, testing in production, bug fixes, and user training.", wrong: "❌ Not quite. The Transition phase is when the software is deployed to actual users and refined." }
   };
 
   let answered = {};
@@ -926,20 +990,24 @@ animals.forEach(a => a.speak())
     }
     const fb = document.getElementById('fb-' + qid);
     fb.textContent = feedbacks[qid][result];
-    fb.className = 'quiz-feedback ' + result;
-    fb.style.display = 'block';
+    fb.className = 'quiz-feedback show ' + (result === 'correct' ? 'correct' : 'wrong');
     if (result === 'correct') correct++;
-    if (Object.keys(answered).length === total) showScore();
+
+    // Update progress text
+    const count = Object.keys(answered).length;
+    document.getElementById('quizProgressText').textContent = 'Question ' + count + ' / ' + total + ' answered';
+
+    if (count === total) showScore();
   }
 
   function showScore() {
     const el = document.getElementById('quiz-score');
-    el.style.display = 'block';
-    document.getElementById('score-num').textContent = correct + ' / ' + total + ' Correct';
+    el.classList.add('visible');
+    document.getElementById('score-num').textContent = correct + ' / ' + total;
     const starCount = Math.round((correct / total) * 5);
     const starsEl = document.getElementById('quiz-stars');
     if (starsEl) starsEl.textContent = '★'.repeat(starCount) + '☆'.repeat(5 - starCount);
-    const msgs = ['Keep studying — go back through the sections!', 'Good start! Review the sections you missed.', 'Not bad! A few more reviews and you\'ll nail it.', 'Great job! You understand the fundamentals well.', 'Perfect score! You\'ve mastered OO Modeling! 🎉'];
+    const msgs = ['Keep studying — go back through the sections!', 'Good start! Review the sections you missed.', 'Not bad! A few more reviews.', 'Good job! A quick review will help.', 'Great job! You understand the fundamentals well.', 'Perfect score! You\'ve mastered OO Modeling! 🎉'];
     document.getElementById('score-msg').textContent = msgs[correct];
     if (correct >= 4) fireConfetti();
     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
